@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Ray Tools</title>
+    <script src="https://code.jquery.com/jquery-1.12.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="raydreams.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="data.js"></script>
+    <script type="text/javascript">
+
+        jQuery(document).ready(function () {
+
+            jQuery("#dataTable").raytable({
+                datasource: { data: myData, keyfield: 'id' }, columns: [
+                    { title: "Add", icons: [{ glyph: "glyphicon-plus", handler: "debug" }], },
+                    { field: "firstName", title: "First Name" },
+                    { field: "lastName", title: "Last Name" },
+                    { field: "gender", title: "Gender" },
+                    { field: "email", title: "Email" },
+                    { field: "title", title: "Title" },
+                    { field: "city", title: "City" }
+                ]
+            });
+
+            jQuery(".glyphicon").css('cursor', 'pointer');
+        });
+
+        function debug(sender)
+        {
+            var id = jQuery(sender).closest('tr').attr('data-ray-key');
+            alert(id);
+        }
+
+    </script>
+</head>
+<body>
+    <div style="width:80%">
+        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="80%">
+            <!--<thead>
+                <tr>
+                    <th data-ray-field="firstName">First Name</th>
+                    <th data-ray-field="lasName">Last Name</th>
+                    <th data-ray-field="gender">Gender</th>
+                    <th data-ray-field="email">Email</th>
+                    <th data-ray-field="title">Title</th>
+                    <th data-ray-field="city">City</th>
+                </tr>
+            </thead>-->
+        </table>
+    </div>
+
+</body>
+
+</html>
