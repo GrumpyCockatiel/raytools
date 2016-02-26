@@ -61,13 +61,12 @@
 				{
 					jQuery.each(headers[j].icons, function (idx, ic) {
 						cell += "<span class='glyphicon " + ic.glyph + "' aria-hidden='true'";
-						cell += " onclick='" + ic.handler + "(this)'";
+						if ( ic.handler != null )
+							cell += " onclick='" + ic.handler + "(this)'";
+						if (ic.data != null)
+							cell += " data='" + data[i][ic.data] + "'";
 						cell += ">";
 					});
-
-					//for (var j = 0; j < headers.length; ++j) {
-						
-					//}
 				}
 
 				if (fieldName != null) {

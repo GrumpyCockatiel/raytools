@@ -15,29 +15,33 @@
 
             jQuery("#dataTable").raytable({
                 datasource: { data: myData, keyfield: 'id' }, columns: [
-                    { title: "Add", icons: [{ glyph: "glyphicon-plus", handler: "debug" }], },
+                    { title: "Add", icons: [{ glyph: "glyphicon-plus", handler: "someAction", data:"id" }], },
                     { field: "firstName", title: "First Name" },
                     { field: "lastName", title: "Last Name" },
                     { field: "gender", title: "Gender" },
                     { field: "email", title: "Email" },
                     { field: "title", title: "Title" },
-                    { field: "city", title: "City" }
+                    { field: "city", title: "City" },
+                    { title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: "someAction", data: "id" }], }
                 ]
             });
 
             jQuery(".glyphicon").css('cursor', 'pointer');
         });
 
-        function debug(sender)
+        function someAction(sender)
         {
-            var id = jQuery(sender).closest('tr').attr('data-ray-key');
+            // jquery to get the record ID back out
+            //var id = jQuery(sender).closest('tr').attr('data-ray-key');
+            var id = jQuery(sender).attr('data');
             alert(id);
         }
 
     </script>
 </head>
 <body>
-    <div style="width:80%">
+    <div style="margin:auto; width:80%">
+        <h3>Ray Table Demo</h3>
         <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="80%">
             <!--<thead>
                 <tr>
@@ -50,8 +54,8 @@
                 </tr>
             </thead>-->
         </table>
+        <div>&copy;2016 by Tag Guillory</div>
     </div>
-
 </body>
 
 </html>
