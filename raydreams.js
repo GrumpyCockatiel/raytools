@@ -7,61 +7,44 @@
 
 (function ($) {
 
-	var headers = []; //column definitions
+	// object that holds all the settings and properties
+	var base = {
+		datasource: { data: [], keyfield: null },
+		headers: [], //column definitions
+		pageSize : 25,
+		parentElem: null,
+		data : loadData
+	};
 
-	$.fn.raytable = function (options)
-	{
-		// remove all records from teh table
-		$(this).find("tbody > tr").remove();
+	// iterates the data and fills in the table body
+	function loadData(data, keyField) {
 
-		// get the input options
-		var data = options.datasource.data;
-		var keyField = options.datasource.keyfield;
+		// remove all data records from teh table
+		base.parentElem.find("tbody > tr").remove();
 
-		// use the options def for columns first
-		if (options.columns != null && options.columns.length > 0 ) {
-			headers = options.columns;
-
-			var ths = '';
-			jQuery.each(headers, function (idx, h) { ths += '<th>' + h.title + '</th>' });
-			$(this).append('<thead><tr>' + ths + '</tr></thead>');
-		}
-		else // use the table headers
-		{
-			var ths = $(this).find('thead tr').children();
-
-			// create header objects based on the html tags
-			for (var j = 0; j < ths.length; ++j) {
-
-				// find the data-ray-field attr
-				var field = $(ths[j]).data('ray-field');
-				var title = $(ths[j]).text();
-				headers.push({field:field, title:title});
-			}
-		}
+		var rowNum = 1;
 
 		// foreach record of data
-		for (var i = 0; i < data.length; i++)
+		for (var i = 0; rowNum < base.pageSize && i < data.length; i++)
 		{
+			// start a new row
 			var newRow = "<tr";
 			if (keyField != null)
 				newRow += " data-ray-key='" + data[i][keyField] + "'";
 			newRow += ">";
 
 			// foreach column in the table fetch the data
-			for (var j = 0; j < headers.length; ++j)
-			{
+			for (var j = 0; j < base.headers.length; ++j) {
 				// find the data-ray-field attr
-				var fieldName = headers[j].field;
+				var fieldName = base.headers[j].field;
 
 				// start the td text
 				var cell = '';
 
-				if (headers[j].icons != null && headers[j].icons.length > 0)
-				{
-					jQuery.each(headers[j].icons, function (idx, ic) {
+				if (base.headers[j].icons != null && base.headers[j].icons.length > 0) {
+					jQuery.each(base.headers[j].icons, function (idx, ic) {
 						cell += "<span class='glyphicon " + ic.glyph + "' aria-hidden='true'";
-						if ( ic.handler != null )
+						if (ic.handler != null)
 							cell += " onclick='" + ic.handler + "(this)'";
 						if (ic.data != null)
 							cell += " data='" + data[i][ic.data] + "'";
@@ -82,8 +65,73 @@
 
 			newRow += "</tr>"
 
-			$(this).append(newRow);
+			$(base.parentElem).find('table > tbody').append(newRow);
+
+			++rowNum;
 		}
+
 	};
+
+	// sets all the options
+	$.fn.raytable = function (options)
+	{
+		// remember the base element
+		base.parentElem = $(this);
+
+		// test the root tag is either div or table, we want to put a div around a table
+		if (base.parentElem.prop("tagName").toLowerCase() != 'div')
+		{
+			alert('Parent element must be a div tag!');
+			return;
+		}
+
+		// if there are no options, then don't change anything, else merge existing options for the same instance
+
+		// get the input options
+		base.datasource.data = options.datasource.data;
+		base.datasource.keyfield = options.datasource.keyfield;
+		if ( options.pagesize != null && options.pagesize > 0 )
+			base.pageSize = options.pagesize;
+
+		// set the headers
+		if (options.columns != null && options.columns.length > 0 ) {
+			base.headers = options.columns;
+		}
+		else // use the table headers
+		{
+			var ths = base.parentElem.find('thead tr').children();
+
+			// create header objects based on the html tags
+			for (var j = 0; j < ths.length; ++j) {
+
+				// find the data-ray-field attr
+				var field = $(ths[j]).data('ray-field');
+				var title = $(ths[j]).text();
+				base.headers.push({field:field, title:title});
+			}
+		}
+
+		// render header
+		renderTable();
+
+		// if data has been specified, then go ahead an load it
+		loadData(base.datasource.data, base.datasource.keyfield);
+
+		return base;
+	};
+
+	//
+	function renderTable()
+	{
+		var skel = '<table class="table table-striped table-bordered">';
+
+		var ths = '';
+		jQuery.each(base.headers, function (idx, h) { ths += '<th>' + h.title + '</th>' });
+		skel += '<thead><tr>' + ths + '</tr></thead>';
+
+		skel += '<tbody></tbody></table>';
+
+		base.parentElem.append(skel);
+	}
 
 }(jQuery));

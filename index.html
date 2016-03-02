@@ -11,10 +11,12 @@
     <script src="data.js"></script>
     <script type="text/javascript">
 
+        var dataTable = null;
+
         jQuery(document).ready(function () {
 
-            jQuery("#dataTable").raytable({
-                datasource: { data: myData, keyfield: 'id' }, columns: [
+            dataTable = jQuery("#dataTable").raytable({
+                datasource: { data: [], keyfield: 'id' }, columns: [
                     { title: "Add", icons: [{ glyph: "glyphicon-plus", handler: "someAction", data:"id" }], },
                     { field: "firstName", title: "First Name" },
                     { field: "lastName", title: "Last Name" },
@@ -22,12 +24,17 @@
                     { field: "email", title: "Email" },
                     { field: "title", title: "Title" },
                     { field: "city", title: "City" },
-                    { title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: "someAction", data: "id" }], }
-                ]
+                    { title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: "someAction", data: "id" }] }
+                ],
+                pagesize: 10
             });
 
             jQuery(".glyphicon").css('cursor', 'pointer');
         });
+
+        function doLoad(sender) {
+            dataTable.data(myData,'id');
+        }
 
         function someAction(sender)
         {
@@ -42,7 +49,8 @@
 <body>
     <div style="margin:auto; width:80%">
         <h3>Ray Table Demo</h3>
-        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="80%">
+        <div><input type="button" onclick="doLoad(this)" value="Load Some Data" class="btn btn-default" /></div>
+        <div id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="80%">
             <!--<thead>
                 <tr>
                     <th data-ray-field="firstName">First Name</th>
@@ -53,7 +61,7 @@
                     <th data-ray-field="city">City</th>
                 </tr>
             </thead>-->
-        </table>
+        </div>
         <div>&copy;2016 by Tag Guillory</div>
     </div>
 </body>

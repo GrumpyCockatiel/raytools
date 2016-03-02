@@ -1,0 +1,10 @@
+#Visual Studio stuff
+Web.config
+Web.Debug.config
+Web.Release.config
+raycontrols.csproj.user
+raycontrols.csproj
+bin
+obj
+Properties
+packages.config
