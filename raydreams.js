@@ -22,10 +22,11 @@
 		// remove all data records from teh table
 		base.parentElem.find("tbody > tr").remove();
 
-		var rowNum = 1;
+		var startRow = 1;
+		var endRow = startRow;
 
 		// foreach record of data
-		for (var i = 0; rowNum < base.pageSize && i < data.length; i++)
+		for (var i = 0; endRow < base.pageSize && i < data.length; i++)
 		{
 			// start a new row
 			var newRow = "<tr";
@@ -67,9 +68,11 @@
 
 			$(base.parentElem).find('table > tbody').append(newRow);
 
-			++rowNum;
+			++endRow;
 		}
 
+		// update the footer
+		setFooter( { start: startRow, end: endRow, total: data.length } );
 	};
 
 	// sets all the options
@@ -117,13 +120,16 @@
 		// if data has been specified, then go ahead an load it
 		loadData(base.datasource.data, base.datasource.keyfield);
 
+		// render footer
+		renderFooter();
+
 		return base;
 	};
 
-	//
+	// creates the skeleton of the table
 	function renderTable()
 	{
-		var skel = '<table class="table table-striped table-bordered">';
+		var skel = '<table class="table table-striped table-bordered" style="margin-bottom:0px;">';
 
 		var ths = '';
 		jQuery.each(base.headers, function (idx, h) { ths += '<th>' + h.title + '</th>' });
@@ -132,6 +138,21 @@
 		skel += '<tbody></tbody></table>';
 
 		base.parentElem.append(skel);
+	}
+
+	// creates the skeleton of the table
+	function renderFooter()
+	{
+		var left = '<span class="glyphicon glyphicon-triangle-left" aria-hidden="true"/>';
+		var right = '<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"/>';
+		var summary = '<span id="raytable-footer-summary" style="float:right;">0 - 0 of 0 items</span>';
+
+		base.parentElem.append('<div id="raytable-footer" style="padding:5px;">' + left + right + summary + "</div>");
+	}
+
+	// creates the skeleton of the table
+	function setFooter(params) {
+		base.parentElem.find('#raytable-footer-summary').text(params.start + ' - ' + params.end + ' of ' + params.total + ' items');
 	}
 
 }(jQuery));
