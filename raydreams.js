@@ -1,9 +1,9 @@
-﻿/*
+﻿/**
  * Ray Tools
  * Copyright (c) 2016 Tag Guillory
  * Created : 2016-Feb-18
  * Last Update : 2016-Feb-26
-*/
+**/
 
 (function ($) {
 
@@ -143,11 +143,14 @@
 	// creates the skeleton of the table
 	function renderFooter()
 	{
-		var left = '<span class="glyphicon glyphicon-triangle-left" aria-hidden="true"/>';
-		var right = '<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"/>';
+		
+		var left = '<span class="glyphicon glyphicon-step-backward" aria-hidden="true"/>&nbsp;<span class="glyphicon glyphicon-triangle-left" aria-hidden="true"/>';
+		var right = '<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"/>&nbsp;<span class="glyphicon glyphicon-step-forward" aria-hidden="true"/>';
+		var pages = '<span id="raytable-footer-pages" />';
+		// nned to create a button toolbar here
 		var summary = '<span id="raytable-footer-summary" style="float:right;">0 - 0 of 0 items</span>';
 
-		base.parentElem.append('<div id="raytable-footer" style="padding:5px;">' + left + right + summary + "</div>");
+		base.parentElem.append('<div id="raytable-footer" style="padding:5px;">' + left + pages + right + summary + "</div>");
 	}
 
 	// creates the skeleton of the table
