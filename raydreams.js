@@ -72,7 +72,7 @@
 		}
 
 		// update the footer
-		setFooter( { start: startRow, end: endRow, total: data.length } );
+		setFooter( { start: startRow, end: endRow - 1, total: data.length } );
 	};
 
 	// sets all the options
