@@ -5,6 +5,8 @@ adding a few button columns with custom handlers, and using icons and styles fro
 I know ther are TONS of js gridtables in the world but the best ones cost and others take some time to figure out all the settings.
 I'm trying to keep this one as simple as possible.
 
+![Raytools data grid](/Screenshots/screen.png)
+
 raytools.js is the only required file.
 Use the index and data file to see how to set it up.
 
