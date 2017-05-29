@@ -1,12 +1,12 @@
 ﻿var serviceBaseDEV = 'http://localhost:9345/IDMService.svc/Json/';
-var serviceBasePROD = 'http://consim.azurewebsites.net/ConSimService.svc/json/'
+var serviceBasePROD = 'http://www.prod.com/IDMService.svc/json/'
 
 function JSONGateway(base) {
 
 	this.serviceBase = base;
 }
 
-//
+// JSON GET Request
 JSONGateway.prototype.getJsonAjax = function (method, callback, data)
 {
 	var params = '?';
@@ -35,7 +35,7 @@ JSONGateway.prototype.getJsonAjax = function (method, callback, data)
 	});
 }
 
-//
+// JSON POST Request
 JSONGateway.prototype.postJsonAjax = function (method, callback, dataBody)
 {
 	if (dataBody != null) {
