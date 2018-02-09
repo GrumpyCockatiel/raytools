@@ -1,8 +1,8 @@
 ﻿/**
  * Ray Tools
- * Copyright (c) 2016 Tag Guillory
+ * Copyright (c) 2016-2018 Tag Guillory
  * Created : 2016-Feb-18
- * Last Update : 2016-July-26
+ * Last Update : 2018-Feb-09
 **/
 
 (function ($) {
@@ -144,8 +144,10 @@
 	// creates the skeleton of the table
 	function renderTable() {
 
+		// skeleton of the table
 		var skel = jQuery('<table class="table table-striped table-bordered" style="margin-bottom:0px;"><thead><tr></tr></thead><tbody></tbody></table>');
 
+		// add each header
 		jQuery.each(base.headers, function (idx, h) {
 
 			var cell = jQuery('<th>'+h.title+'</th>');
