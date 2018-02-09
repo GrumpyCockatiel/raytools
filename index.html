@@ -16,17 +16,18 @@
         jQuery(document).ready(function () {
 
             dataTable = jQuery("#dataTable").raytable({
-                datasource: { data: [], keyfield: 'id' }, columns: [
+            	datasource: { data: [], keyfield: 'id' }, columns: [
                     { title: "Add", icons: [{ glyph: "glyphicon-plus", handler: "someAction", data:"id" }], },
-                    { field: "firstName", title: "First Name" },
-                    { field: "lastName", title: "Last Name" },
-                    { field: "gender", title: "Gender" },
-                    { field: "email", title: "Email" },
-                    { field: "title", title: "Title" },
-                    { field: "city", title: "City" },
+                    { field: "firstName", title: "First Name", sort:true },
+                    { field: "lastName", title: "Last Name", sort: true },
+                    { field: "gender", title: "Gender", sort: true },
+                    { field: "email", title: "Email", sort: true },
+                    { field: "title", title: "Title", sort: true },
+                    { field: "city", title: "City", sort: true },
                     { title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: "someAction", data: "id" }] }
                 ],
-                pagesize: 10
+            	pagesize: 10,
+            	rowNumbers: true
             });
 
             jQuery(".glyphicon").css('cursor', 'pointer');
@@ -42,6 +43,10 @@
             //var id = jQuery(sender).closest('tr').attr('data-ray-key');
             var id = jQuery(sender).attr('data');
             alert('You clicked the item with ID = ' + id);
+        }
+
+        function doSortX(sender) {
+        	alert('Sorting');
         }
 
     </script>

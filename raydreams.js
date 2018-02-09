@@ -15,7 +15,8 @@
 		currentPageIdx: 0, // current page index
 		parentElem: null, // the base HTML element
 		data: loadData, // function reference to set the data
-		rowNumbers: true // whether to add a column with line numbers in it
+		rowNumbers: true, // whether to add a column with line numbers in it
+		currentSort: null // the current field and direction of sorting
 	};
 
 	// iterates the data and fills in the table body
@@ -142,20 +143,26 @@
 
 	// creates the skeleton of the table
 	function renderTable() {
-		var skel = '<table class="table table-striped table-bordered" style="margin-bottom:0px;">';
 
-		var ths = '';
+		var skel = jQuery('<table class="table table-striped table-bordered" style="margin-bottom:0px;"><thead><tr></tr></thead><tbody></tbody></table>');
 
 		jQuery.each(base.headers, function (idx, h) {
-			if (h.width == undefined)
-				ths += '<th>' + h.title + '</th>'
-			else
-				ths += '<th style="width:' + h.width + 'px">' + h.title + '</th>'
+
+			var cell = jQuery('<th>'+h.title+'</th>');
+
+			if (h.width != undefined)
+				cel.css('width', h.width+'px');
+
+			if (h.sort)
+			{
+				var sortBtn = jQuery("<span class='glyphicon glyphicon-sort-by-attributes' style='color:LightGray' aria-hidden='true' />");
+				cell.append('&nbsp;');
+				cell.append(sortBtn);
+				sortBtn.on('click', null, h.field, doSortCol);
+			}
+
+			skel.find('tr').append(cell);
 		});
-
-		skel += '<thead><tr>' + ths + '</tr></thead>';
-
-		skel += '<tbody></tbody></table>';
 
 		// add the table header and body to the parent elem
 		base.parentElem.append(skel);
@@ -211,6 +218,56 @@
 
 		// reload the data
 		loadData(base.datasource.data, base.datasource.keyfield);
+	}
+
+	//
+	function doSortCol(event) {
+		if (base.currentSort == null)
+		{ base.currentSort = { field: event.data, direction: 1 }; }
+		else if (base.currentSort.field != event.data)
+		{ base.currentSort = { field: event.data, direction: base.currentSort.direction }; }
+		else
+		{ base.currentSort = { field: event.data, direction: base.currentSort.direction * -1 }; }
+
+		// sort the data
+		base.datasource.data.sort( dynamicSort(event.data));
+
+		// reload the date and page back to start
+		base.currentPageIdx = 0;
+		loadData(base.datasource.data, base.datasource.keyfield);
+
+		// change the glyph 1=asc, -1=desc
+		if (base.currentSort.direction > 0)
+		{
+			base.parentElem.find('thead th span').each(
+				function (idx, elem) {
+					jQuery(elem).removeClass('glyphicon-sort-by-attributes-alt');
+					jQuery(elem).addClass('glyphicon-sort-by-attributes');
+					jQuery(elem).css('color', 'LightGray');
+				}
+				);
+		}
+		else
+		{
+			base.parentElem.find('thead th span').each(
+				function (idx, elem) {
+					jQuery(elem).removeClass('glyphicon-sort-by-attributes');
+					jQuery(elem).addClass('glyphicon-sort-by-attributes-alt');
+					jQuery(elem).css('color', 'LightGray');
+				}
+				);
+		}
+		jQuery(event.target).css('color', 'Black');
+	}
+
+	// sort by a specified property, use prefix '-' to reverse the sort direction
+	function dynamicSort(property) {
+		var sortOrder = base.currentSort.direction;
+
+		return function (a, b) {
+			var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+			return result * sortOrder;
+		}
 	}
 
 	//
