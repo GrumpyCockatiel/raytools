@@ -39,7 +39,7 @@ If rowNumbers is set to true, then the first column will be incrementing row cou
 
 Pagesize should be self-explanatory.
 
-Sorting is very basic
+Sorting is very basic.
 
 You can add Bootstrap icons to any column and attache them to any client side handler. You can even have multiple icons in one column.
 
