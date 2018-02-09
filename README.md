@@ -29,6 +29,14 @@ var dataTable = jQuery("#dataTable").raytable({
 	});
 ```
 
+The datasource property has a data and keyfield property. Data can be left blank and set after loading or with a default object array. Keyfield is the object proprety to use to identify each unique object.
+
+Columns is the array of column objects to display which mainly need a title and field to map to in the data objects.
+
+If rowNumbers is set to true, then the first column will be incrementing row count.
+
+Pagesize should be self-explanatory.
+
 Sorting is very basic
 
 You can add Bootstrap icons to any column and attache them to any client side handler. You can even have multiple icons in one column.
