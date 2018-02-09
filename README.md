@@ -13,7 +13,7 @@ Use the index and data file to see how to set it up.
 
 Obviously it has a dependency on Bootstrap and jQuery.
 
-Sorting isn't done yet.
+Sorting is very basic
 
 You can add Bootstrap icons to any column and attache them to any client side handler. You can even have multiple icons in one column.
 
