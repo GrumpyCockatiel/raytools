@@ -7,7 +7,7 @@ I'm trying to keep this one as simple as possible.
 
 raytools.js is the only required file and the only dependencies are of course Bootstrap and jQuery.
 
-[Live Demo](https://www.raydreams.com/raytable/)
+[Live Demo](http://www.raydreams.com/raytable/)
 
 ![Raytools data grid](/Screenshots/screen.png)
 
