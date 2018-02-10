@@ -11,12 +11,13 @@
 	var base = {
 		datasource: { data: [], keyfield: null },
 		headers: [], //column definitions
-		pageSize: 25,
+		pageSize: 25, // current page size
 		currentPageIdx: 0, // current page index
 		parentElem: null, // the base HTML element
 		data: loadData, // function reference to set the data
 		rowNumbers: true, // whether to add a column with line numbers in it
-		currentSort: null // the current field and direction of sorting
+		currentSort: null, // the current field and direction of sorting
+		currentSelection: null, // last clicked row
 	};
 
 	// iterates the data and fills in the table body
@@ -31,22 +32,28 @@
 		var curRow = startRow;
 
 		// foreach record of data
-		for (var row = startRow - 1; row < ((base.currentPageIdx + 1) * base.pageSize) && row < data.length; ++row) {
+		for (var row = startRow - 1; row < ((base.currentPageIdx + 1) * base.pageSize) && row < data.length; ++row)
+		{
 			// start a new row
-			var rowStr = "<tr";
+			//var rowStr = "<tr";
+			var rowStr = jQuery('<tr></tr>');
 			if (keyField != null)
-				rowStr += " data-ray-key='" + data[row][keyField] + "'";
-			rowStr += ">";
+				rowStr.attr( 'data-ray-key', data[row][keyField] );
+				//rowStr += " data-ray-key='" + data[row][keyField] + "'";
+			//rowStr += ">";
 
 			// add a column to hold row numbers
 			if (base.rowNumbers) {
-				rowStr += '<td>' + (row + 1) + '</td>';
+				//rowStr += '<td>' + (row + 1) + '</td>';
+				rowStr.append('<td>' + (row + 1) + '</td>');
 			}
 
 			// foreach column in the table fetch the data
 			var col = (base.rowNumbers) ? 1 : 0;
+			
 			for (; col < base.headers.length; ++col) {
-				// find the data-ray-field attr
+				
+				// get this field name
 				var fieldName = base.headers[col].field;
 
 				// start the td text
@@ -63,18 +70,22 @@
 					});
 				}
 
+				// add data
 				if (fieldName != null) {
 					cell += data[row][fieldName];
 				}
 
+				// if empty add a space
 				if (cell.length < 1) {
 					cell += "&nbsp;";
 				}
 
-				rowStr += "<td>" + cell + "</td>"
+				rowStr.append("<td>" + cell + "</td>");
 			}
 
-			rowStr += "</tr>"
+			//rowStr += "</tr>"
+			// add onClick event handler to the row
+			rowStr.on('click', null, { rowIdx: row, id: data[row][keyField] }, doRowClick );
 
 			$(base.parentElem).find('table > tbody').append(rowStr);
 
@@ -261,6 +272,11 @@
 		}
 		jQuery(event.target).css('color', 'Black');
 	}
+	
+	// when a row is clicked on
+	function doRowClick(event) {
+		base.currentSelection = event.data;
+	}
 
 	// sort by a specified property, use prefix '-' to reverse the sort direction
 	function dynamicSort(property) {
@@ -274,7 +290,7 @@
 
 	//
 	function debug(event) {
-		alert();
+		alert('Debugging');
 	}
 
 }(jQuery));
