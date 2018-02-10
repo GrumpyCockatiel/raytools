@@ -1,4 +1,11 @@
-﻿var serviceBaseDEV = 'http://localhost:9345/IDMService.svc/Json/';
+﻿/**
+ * JSONGateway
+ * This is not a required file. It's just a simple class to connect front end to back end methods.
+ * 
+ * 
+**/
+
+var serviceBaseDEV = 'http://localhost:9345/IDMService.svc/Json/';
 var serviceBasePROD = 'http://www.prod.com/IDMService.svc/json/'
 
 function JSONGateway(base) {

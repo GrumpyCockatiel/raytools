@@ -8,3 +8,4 @@ bin
 obj
 Properties
 packages.config
+*.bbprojectd

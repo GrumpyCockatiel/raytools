@@ -34,21 +34,18 @@
             jQuery(".glyphicon").css('cursor', 'pointer');
                                  
         });
-
+		
+		// load some data
         function doLoad(sender) {
             dataTable.data(myData,'id');
         }
 
+		// icon clicked event handler
         function someAction(sender)
         {
             // jquery to get the record ID back out
-            //var id = jQuery(sender).closest('tr').attr('data-ray-key');
             var id = jQuery(sender).attr('data');
             alert('You clicked the item with ID = ' + id);
-        }
-
-        function afterSort(sender) {
-        	alert('Sorting');
         }
 
     </script>
