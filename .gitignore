@@ -9,3 +9,4 @@ obj
 Properties
 packages.config
 *.bbprojectd
+.DS_Store
