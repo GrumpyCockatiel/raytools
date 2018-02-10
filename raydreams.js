@@ -2,7 +2,7 @@
  * Ray Tools
  * Copyright (c) 2016-2018 Tag Guillory
  * Created : 2016-Feb-18
- * Last Update : 2018-Feb-09
+ * Last Update : 2018-Feb-10
 **/
 
 (function ($) {
