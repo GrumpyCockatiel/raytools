@@ -33,7 +33,7 @@ var dataTable = jQuery("#dataTable").raytable({
 
 The datasource property has a data and keyfield property. Data can be left blank and set after loading or with a default object array. keyfield is the object proprety to use to identify each unique object.
 
-Columns is the array of column objects to display which mainly need a title and field to map to in the data objects. It can optionally have an array of icon objects with glyph property to set the Bootstrap glyph icon name, an external function handler, and some data value like a data object property. Column icon event handlers return a jQuery event in which event.data = {rowIdx:<0 based row index>, id:<object key field>}
+Columns is the array of column objects to display which mainly need a title and field to map to in the data objects. It can optionally have an array of icon objects with glyph property to set the Bootstrap glyph icon name, an external function handler, and some data value like a data object property. Column icon event handlers return a jQuery event in which event.data = {rowIdx:&lt;0 based row index&gt;, id:&lt;object key field&gt;}
 
 If rowNumbers is set to true, then the first column will be incrementing row count.
 
