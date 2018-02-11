@@ -18,17 +18,18 @@
             dataTable = jQuery("#dataTable").raytable({
             	datasource: { data: [], keyfield: 'id' },
             	columns: [
-                    { title: "Add", icons: [{ glyph: "glyphicon-plus", handler: "someAction", data:"id" }] },
+                    { title: "Add", icons: [{ glyph: "glyphicon-plus", handler: iconAction, data:"id" }] },
                     { field: "firstName", title: "First Name", sort:true },
                     { field: "lastName", title: "Last Name", sort: true },
                     { field: "gender", title: "Gender", sort: true },
                     { field: "email", title: "Email" },
                     { field: "title", title: "Title", sort: true },
                     { field: "city", title: "City", sort: true },
-                    { title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: "someAction", data: "id" }] }
+                    { title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: iconAction, data: "id" }] }
                 ],
             	pagesize: 10,
-            	rowNumbers: true
+            	rowNumbers: true,
+            	rowClickHandler: rowAction
             });
 
             jQuery(".glyphicon").css('cursor', 'pointer');
@@ -41,11 +42,20 @@
         }
 
 		// icon clicked event handler
-        function someAction(sender)
+        function iconAction(event)
         {
             // jquery to get the record ID back out
-            var id = jQuery(sender).attr('data');
-            alert('You clicked the item with ID = ' + id);
+            var data = jQuery(event.target).data('ray-data');
+            alert('glyph icon data is ' + data);
+            //alert('You clicked the icon with data = ' + event.data.id + ' on row ' + event.data.rowIdx );
+        }
+        
+        // row clicked handler
+        function rowAction(event)
+        {
+            // jquery to get the record ID back out
+            //var id = jQuery(event.target).data('ray-key');
+            alert('You clicked row ' + event.data.rowIdx + ' with object ID ' + event.data.id );
         }
 
     </script>

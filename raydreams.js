@@ -2,7 +2,8 @@
  * Ray Tools
  * Copyright (c) 2016-2018 Tag Guillory
  * Created : 2016-Feb-18
- * Last Update : 2018-Feb-10
+ * Last Update : 2018-Feb-11
+ * Version : 0.9
 **/
 
 (function ($) {
@@ -18,6 +19,7 @@
 		rowNumbers: true, // whether to add a column with line numbers in it
 		currentSort: null, // the current field and direction of sorting
 		currentSelection: null, // last clicked row
+		onRowClick: null // last clicked row
 	};
 
 	// iterates the data and fills in the table body
@@ -35,58 +37,67 @@
 		for (var row = startRow - 1; row < ((base.currentPageIdx + 1) * base.pageSize) && row < data.length; ++row)
 		{
 			// start a new row
-			//var rowStr = "<tr";
 			var rowStr = jQuery('<tr></tr>');
 			if (keyField != null)
-				rowStr.attr( 'data-ray-key', data[row][keyField] );
-				//rowStr += " data-ray-key='" + data[row][keyField] + "'";
-			//rowStr += ">";
+				//rowStr.attr( 'data-ray-key', data[row][keyField] );
+				rowStr.data( 'ray-key', data[row][keyField] );
 
 			// add a column to hold row numbers
 			if (base.rowNumbers) {
-				//rowStr += '<td>' + (row + 1) + '</td>';
 				rowStr.append('<td>' + (row + 1) + '</td>');
 			}
 
 			// foreach column in the table fetch the data
 			var col = (base.rowNumbers) ? 1 : 0;
 			
+			// for each header column
 			for (; col < base.headers.length; ++col) {
 				
 				// get this field name
 				var fieldName = base.headers[col].field;
 
-				// start the td text
-				var cell = '';
+				// start the td
+				//var cell = '';
+				var cell = jQuery('<td></td>');
 
-				if (base.headers[col].icons != null && base.headers[col].icons.length > 0) {
+				// foreach icon in the column
+				if (base.headers[col].icons != null && base.headers[col].icons.length > 0)
+				{
 					jQuery.each(base.headers[col].icons, function (idx, ic) {
-						cell += "<span class='glyphicon " + ic.glyph + "' aria-hidden='true'";
+						var colBtn = jQuery("<span class='glyphicon' aria-hidden='true' />");
+						colBtn.addClass(ic.glyph);
+						//cell += "<span class='glyphicon " + ic.glyph + "' aria-hidden='true'";
 						if (ic.handler != null)
-							cell += " onclick='" + ic.handler + "(this)'";
+							cell.on('click', null, {handler:ic.handler, data: { rowIdx: row, id: data[row][keyField] } }, doIconClick );
+							//cell += " onclick='" + ic.handler + "(this)'";
 						if (ic.data != null)
-							cell += " data='" + data[row][ic.data] + "'";
-						cell += ">";
+							colBtn.data('ray-data', data[row][ic.data]);
+							//cell += " data='" + data[row][ic.data] + "'";
+						//cell += ">";
+						cell.append(colBtn);
 					});
 				}
 
-				// add data
+				// add cell data
 				if (fieldName != null) {
-					cell += data[row][fieldName];
+					//cell += data[row][fieldName];
+					cell.append(data[row][fieldName]);
 				}
 
 				// if empty add a space
-				if (cell.length < 1) {
-					cell += "&nbsp;";
+				if ( jQuery.trim(cell.html()).length < 1 ) {
+					//cell += "&nbsp;";
+					cell.append("&nbsp;");
 				}
 
-				rowStr.append("<td>" + cell + "</td>");
+				//rowStr.append("<td>" + cell + "</td>");
+				rowStr.append(cell);
 			}
 
-			//rowStr += "</tr>"
 			// add onClick event handler to the row
 			rowStr.on('click', null, { rowIdx: row, id: data[row][keyField] }, doRowClick );
 
+			// append the row
 			$(base.parentElem).find('table > tbody').append(rowStr);
 
 			++curRow;
@@ -115,6 +126,7 @@
 		if (options.pagesize != null && options.pagesize > 0)
 			base.pageSize = options.pagesize;
 		base.rowNumbers = options.rowNumbers;
+		base.onRowClick = options.rowClickHandler;
 
 		// set the headers
 		if (options.columns != null && options.columns.length > 0) {
@@ -232,8 +244,29 @@
 		// reload the data
 		loadData(base.datasource.data, base.datasource.keyfield);
 	}
+	
+	// when a glyph icon is clicked
+	function doIconClick(event) {
+		event.stopPropagation();
+		
+		// set external handler
+		var handler = event.data.handler;
+		
+		// set the current selection
+		base.currentSelection = event.data.data;
+		
+		// forward the event
+		event.data = event.data.data;
+		handler(event);
+	}
+	
+	// when a row is clicked on
+	function doRowClick(event) {
+		base.currentSelection = event.data;
+		base.onRowClick(event);
+	}
 
-	//
+	// sorts the bound data
 	function doSortCol(event) {
 		if (base.currentSort == null)
 		{ base.currentSort = { field: event.data, direction: 1 }; }
@@ -272,11 +305,6 @@
 		}
 		jQuery(event.target).css('color', 'Black');
 	}
-	
-	// when a row is clicked on
-	function doRowClick(event) {
-		base.currentSelection = event.data;
-	}
 
 	// sort by a specified property, use prefix '-' to reverse the sort direction
 	function dynamicSort(property) {
@@ -288,7 +316,7 @@
 		}
 	}
 
-	//
+	// internal debug handler
 	function debug(event) {
 		alert('Debugging');
 	}

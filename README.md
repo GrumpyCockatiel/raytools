@@ -33,7 +33,7 @@ var dataTable = jQuery("#dataTable").raytable({
 
 The datasource property has a data and keyfield property. Data can be left blank and set after loading or with a default object array. keyfield is the object proprety to use to identify each unique object.
 
-Columns is the array of column objects to display which mainly need a title and field to map to in the data objects. It can optionally have an array of icon objects with glyph property to set the Bootstrap glyph icon name, and function handler, and some data value like a data object property.
+Columns is the array of column objects to display which mainly need a title and field to map to in the data objects. It can optionally have an array of icon objects with glyph property to set the Bootstrap glyph icon name, an external function handler, and some data value like a data object property. Column icon event handlers return a jQuery event in which event.data = {rowIdx:<0 based row index>, id:<object key field>}
 
 If rowNumbers is set to true, then the first column will be incrementing row count.
 
@@ -43,6 +43,6 @@ Sorting is very basic, just add sort to true on a column.
 
 You can add Bootstrap icons to any column and attache them to any client side handler. You can even have multiple icons in one column.
 
-Clicking a row set the table's currentSelection property to an object with the zero based row index as well as the keyfield ID of the object bound to that row. There's no external row click event handler yet.
+Clicking a row set the table's currentSelection property to an object with the zero based row index as well as the keyfield ID of the object bound to that row. Set the table property rowClickHander to your own external event handler which also gets a jQuery event as the sole parameter.
 
 Enjoy
