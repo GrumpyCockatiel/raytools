@@ -17,17 +17,18 @@ Use the index and data file to see how to set it up.
 var dataTable = jQuery("#dataTable").raytable({
 	datasource: { data: [], keyfield: 'id' },
 		columns: [
-			{ title: "Add", icons: [{ glyph: "glyphicon-plus", handler: "someAction", data:"id" }] },
+			{ title: "Add", icons: [{ glyph: "glyphicon-plus", handler: someAction, data:"id" }] },
 			{ field: "firstName", title: "First Name", sort:true },
 			{ field: "lastName", title: "Last Name", sort: true },
 			{ field: "gender", title: "Gender", sort: true },
 			{ field: "email", title: "Email" },
 			{ field: "title", title: "Title", sort: true },
 			{ field: "city", title: "City", sort: true },
-			{ title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: "someAction", data: "id" }] }
+			{ title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: someAction, data: "id" }] }
 		],
 		pagesize: 10,
-		rowNumbers: true
+		rowNumbers: true,
+		rowClickHandler: rowAction
 	});
 ```
 
