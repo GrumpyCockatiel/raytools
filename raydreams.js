@@ -57,40 +57,36 @@
 				var fieldName = base.headers[col].field;
 
 				// start the td
-				//var cell = '';
 				var cell = jQuery('<td></td>');
 
 				// foreach icon in the column
 				if (base.headers[col].icons != null && base.headers[col].icons.length > 0)
 				{
 					jQuery.each(base.headers[col].icons, function (idx, ic) {
+					
 						var colBtn = jQuery("<span class='glyphicon' aria-hidden='true' />");
 						colBtn.addClass(ic.glyph);
-						//cell += "<span class='glyphicon " + ic.glyph + "' aria-hidden='true'";
+						
 						if (ic.handler != null)
 							cell.on('click', null, {handler:ic.handler, data: { rowIdx: row, id: data[row][keyField] } }, doIconClick );
-							//cell += " onclick='" + ic.handler + "(this)'";
+
 						if (ic.data != null)
 							colBtn.data('ray-data', data[row][ic.data]);
-							//cell += " data='" + data[row][ic.data] + "'";
-						//cell += ">";
+
 						cell.append(colBtn);
 					});
 				}
 
 				// add cell data
 				if (fieldName != null) {
-					//cell += data[row][fieldName];
 					cell.append(data[row][fieldName]);
 				}
 
 				// if empty add a space
 				if ( jQuery.trim(cell.html()).length < 1 ) {
-					//cell += "&nbsp;";
 					cell.append("&nbsp;");
 				}
 
-				//rowStr.append("<td>" + cell + "</td>");
 				rowStr.append(cell);
 			}
 
