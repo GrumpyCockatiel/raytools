@@ -11,6 +11,7 @@
     <script src="data.js"></script>
     <script type="text/javascript">
 
+		// the data table itself
         var dataTable = null;
 
         jQuery(document).ready(function () {
@@ -18,10 +19,10 @@
             dataTable = jQuery("#dataTable").raytable({
             	datasource: { data: [], keyfield: 'id' },
             	columns: [
-                    { title: "Add", icons: [{ glyph: "glyphicon-plus", handler: iconAction, data:"id" }] },
+                    { title: "Info", icons: [{ glyph: "glyphicon-info-sign", handler: iconAction, data:"id" }], renderIf: isFemale },
                     { field: "firstName", title: "First Name", sort:true },
                     { field: "lastName", title: "Last Name", sort: true },
-                    { field: "gender", title: "Gender", sort: true },
+                    { field: "gender", title: "Gender", sort: true,  format: parseGender },
                     { field: "email", title: "Email" },
                     { field: "title", title: "Title", sort: true },
                     { field: "city", title: "City", sort: true },
@@ -33,6 +34,9 @@
             });
 
             jQuery(".glyphicon").css('cursor', 'pointer');
+            
+            // load some default
+            //doLoad(jQuery("#dataTable"));
                                  
         });
 		
@@ -57,6 +61,18 @@
             //var id = jQuery(event.target).data('ray-key');
             alert('You clicked row ' + event.data.rowIdx + ' with object ID ' + event.data.id );
         }
+        
+        // boolean handler to determine if the cell content is rendered
+    	function isFemale(item)
+    	{
+    		return (item.gender.toUpperCase()[0] == 'F' );
+    	}
+    	
+    	// custom format handler
+    	function parseGender(item)
+    	{
+    		return (item.gender.toUpperCase()[0] );
+    	}
 
     </script>
 

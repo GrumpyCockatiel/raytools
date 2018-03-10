@@ -36,6 +36,8 @@ The datasource property has a data and keyfield property. Data can be left blank
 
 Columns is the array of column objects to display which mainly need a title and field to map to in the data objects. It can optionally have an array of icon objects with glyph property to set the Bootstrap glyph icon name, an external function handler, and some data value like a data object property. Column icon event handlers return a jQuery event in which event.data = {rowIdx:&lt;0 based row index&gt;, id:&lt;object key field&gt;}
 
+Columns can also have a renderIf and format custom handler. The first has the signature of (item)->bool and the later (item)->string - where item is the row data item. If renderIf returns false, then the cell will be rendered completely empty. You can use this to skip buttons on some rows based on a condition.
+
 If rowNumbers is set to true, then the first column will be incrementing row count.
 
 Pagesize should be self-explanatory.

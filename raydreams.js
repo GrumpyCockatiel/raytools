@@ -19,7 +19,7 @@
 		rowNumbers: true, // whether to add a column with line numbers in it
 		currentSort: null, // the current field and direction of sorting
 		currentSelection: null, // last clicked row
-		onRowClick: null // last clicked row
+		onRowClick: null // external handler when a row is clicked
 	};
 
 	// iterates the data and fills in the table body
@@ -47,7 +47,7 @@
 				rowStr.append('<td>' + (row + 1) + '</td>');
 			}
 
-			// foreach column in the table fetch the data
+			// set the col index if there are row numbers
 			var col = (base.rowNumbers) ? 1 : 0;
 			
 			// for each header column
@@ -58,6 +58,14 @@
 
 				// start the td
 				var cell = jQuery('<td></td>');
+				
+				// the render func returns false
+				if ( base.headers[col].renderIf != null && !base.headers[col].renderIf(data[row]) )
+				{
+					cell.append("&nbsp;");
+					rowStr.append(cell);
+					continue;
+				}
 
 				// foreach icon in the column
 				if (base.headers[col].icons != null && base.headers[col].icons.length > 0)
@@ -78,8 +86,12 @@
 				}
 
 				// add cell data
-				if (fieldName != null) {
-					cell.append(data[row][fieldName]);
+				if (fieldName != null)
+				{
+					if ( base.headers[col].format != null )
+						cell.append( base.headers[col].format( data[row] ) );
+					else
+						cell.append(data[row][fieldName]);
 				}
 
 				// if empty add a space
@@ -105,6 +117,7 @@
 
 	// sets all the options
 	jQuery.fn.raytable = function (options) {
+	
 		// remember the base element
 		base.parentElem = $(this);
 
@@ -119,8 +132,10 @@
 		// get the input options
 		base.datasource.data = options.datasource.data;
 		base.datasource.keyfield = options.datasource.keyfield;
+		
 		if (options.pagesize != null && options.pagesize > 0)
 			base.pageSize = options.pagesize;
+			
 		base.rowNumbers = options.rowNumbers;
 		base.onRowClick = options.rowClickHandler;
 
