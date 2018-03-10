@@ -213,6 +213,7 @@
 		if (!params)
 			return;
 
+		// clear out the footer
 		base.parentElem.find('#raytable-footer').empty();
 
 		// update the summary
@@ -221,23 +222,21 @@
 		// render pagination control
 		var pager = '<ul class="pagination pagination-sm" id="raytable-footer-pager" style="margin-top:0px;"></ul>';
 		base.parentElem.find('#raytable-footer').append(pager);
-		//pager += '<li><a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"/></a></li>';
-		//pager += '<li><a href="#"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"/></a></li>';
 
-		var page = 0;
-		for (var i = params.total; i > 0; i -= base.pageSize) {
-			var li = jQuery('<li></li>');
-			if (page == base.currentPageIdx)
-				li = jQuery('<li class="active"></li>');
-			var test2 = jQuery('<a href="#" data="' + page + '">' + (page + 1) + '</a>');
-			li.append(test2);
-			test2.on("click", changePage);
-			base.parentElem.find('#raytable-footer-pager').append(li);
-			++page;
+		if ( params.total > base.pageSize )
+		{
+			var page = 0;
+			for (var i = params.total; i > 0; i -= base.pageSize) {
+				var li = jQuery('<li></li>');
+				if (page == base.currentPageIdx)
+					li = jQuery('<li class="active"></li>');
+				var anchor = jQuery('<a href="#" data="' + page + '">' + (page + 1) + '</a>');
+				li.append(anchor);
+				anchor.on("click", changePage);
+				base.parentElem.find('#raytable-footer-pager').append(li);
+				++page;
+			}
 		}
-
-		//pager += '<li><a href="#"><span class="glyphicon glyphicon-triangle-right" aria-hidden="true"/></a></li>';
-		//pager += '<li><a href="#"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"/></a></li>';
 
 		var summary = '<span id="raytable-footer-summary" style="float:right;">' + params.start + ' - ' + params.end + ' of ' + params.total + ' items</span>';
 		base.parentElem.find('#raytable-footer').append(summary);
