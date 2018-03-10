@@ -14,19 +14,19 @@ raytools.js is the only required file and the only dependencies are of course Bo
 Use the index and data file to see how to set it up.
 
 ```
-var dataTable = jQuery("#dataTable").raytable({
+dataTable = jQuery("#dataTable").raytable({
 	datasource: { data: [], keyfield: 'id' },
 		columns: [
-			{ title: "Add", icons: [{ glyph: "glyphicon-plus", handler: someAction, data:"id" }] },
+			{ title: "Info", icons: [{ glyph: "glyphicon-info-sign", handler: iconAction, data:"id" }], renderIf: isManager },
 			{ field: "firstName", title: "First Name", sort:true },
 			{ field: "lastName", title: "Last Name", sort: true },
-			{ field: "gender", title: "Gender", sort: true },
-			{ field: "email", title: "Email" },
-			{ field: "title", title: "Title", sort: true },
-			{ field: "city", title: "City", sort: true },
-			{ title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: someAction, data: "id" }] }
+			{ field: "title", title: "Title" },
+			{ field: "grade", title: "Grade", sort: true },
+			{ field: "ssn", title: "SSN"  },
+			{ field: "birthDate", title: "DOB", sort: true, format: parseDate },
+			{ title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: iconAction, data: "id" }] }
 		],
-		pagesize: 10,
+		pagesize: 13,
 		rowNumbers: true,
 		rowClickHandler: rowAction
 	});
