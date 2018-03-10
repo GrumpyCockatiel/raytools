@@ -5,13 +5,13 @@ adding a few button columns with custom handlers, and using icons and styles fro
 I know ther are TONS of js gridtables in the world but the best ones cost and others take some time to figure out all the settings.
 I'm trying to keep this one as simple as possible.
 
-raytools.js is the only required file and the only dependencies are of course Bootstrap and jQuery. All icons come from Bootstrap and are set with their glyph name.
+raytools.js is the only required file with dependencies on Bootstrap 3 and jQuery 1.12. It has not been upgraded to Bootstrap 4. All icons come from the Bootstrap 3 Glyphicons.
 
 [Live Demo](http://www.raydreams.com/raytable/)
 
 ![Raytools data grid](/Screenshots/screen.png)
 
-Use the index and data file to see how to set it up.
+See the index and data file to see how to configure.
 
 ```
 dataTable = jQuery("#dataTable").raytable({
@@ -32,7 +32,7 @@ dataTable = jQuery("#dataTable").raytable({
 	});
 ```
 
-The datasource property has a data and keyfield property. Data can be left blank and set after loading or with a default object array. keyfield is the object proprety to use to identify each unique object.
+The datasource property has a data and keyfield property. Data can be left blank and set after loading or with a default object array. keyfield is the object property to use to identify each unique row object.
 
 Columns is the array of column objects to display which mainly need a title and field to map to in the data objects. It can optionally have an array of icon objects with glyph property to set the Bootstrap glyph icon name, an external function handler, and some data value like a data object property. Column icon event handlers return a jQuery event in which event.data = {rowIdx:&lt;0 based row index&gt;, id:&lt;object key field&gt;}
 
