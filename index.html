@@ -19,7 +19,7 @@
 
         jQuery(document).ready(function () {
 
-            dataTable = jQuery("#dataTable").raytable({
+        	dataTable = jQuery("#dataTable").raytable({
             	datasource: { data: [], keyfield: 'id' },
             	columns: [
                     { title: "Info", icons: [{ glyph: "glyphicon-info-sign", handler: iconAction, data:"id" }], renderIf: isManager },
@@ -35,7 +35,7 @@
             	maxPageButtons: 10,
             	rowNumbers: true,
             	rowClickHandler: rowAction
-            });
+        	});
 
             jQuery(".glyphicon").css('cursor', 'pointer');
             

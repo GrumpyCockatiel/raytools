@@ -13,7 +13,8 @@
 		datasource: { data: [], keyfield: null },
 		headers: [], //column definitions
 		pageSize: 25, // current page size
-		currentPageIdx: 0, // current page index
+		currentPageIdx: 0, // current page index - zero based
+		maxPageButtons: 5, // the maximum number of pager buttons to display
 		parentElem: null, // the base HTML element
 		data: loadData, // function reference to set the data
 		rowNumbers: true, // whether to add a column with line numbers in it
@@ -220,22 +221,45 @@
 		base.parentElem.find('#raytable-footer-summary').text(params.start + ' - ' + params.end + ' of ' + params.total + ' items');
 
 		// render pagination control
-		var pager = '<ul class="pagination pagination-sm" id="raytable-footer-pager" style="margin-top:0px;"></ul>';
+		var pager = jQuery('<ul class="pagination pagination-sm" id="raytable-footer-pager" style="margin-top:0px;"></ul>');
 		base.parentElem.find('#raytable-footer').append(pager);
 
+		// there are more items than page size
 		if ( params.total > base.pageSize )
 		{
 			var page = 0;
-			for (var i = params.total; i > 0; i -= base.pageSize) {
-				var li = jQuery('<li></li>');
-				if (page == base.currentPageIdx)
-					li = jQuery('<li class="active"></li>');
-				var anchor = jQuery('<a href="#" data="' + page + '">' + (page + 1) + '</a>');
+			
+			if ( base.maxPageButtons < 3 )
+				base.maxPageButtons = 3;
+				
+			var startPage = base.currentPageIdx - Math.floor(base.maxPageButtons / 2);
+			
+			if (startPage < 0)
+			{ startPage = 0; }
+			
+			pager.append('<li><a href="#" aria-label="Previous">&laquo;</a></li>');
+			
+			for (var p = startPage; p < startPage + base.maxPageButtons; ++p)
+			{
+				var li = (p == base.currentPageIdx) ? jQuery('<li class="active"></li>') : jQuery('<li></li>');
+				var anchor = jQuery('<a href="#" data="' + p + '">' + (p + 1) + '</a>');
 				li.append(anchor);
 				anchor.on("click", changePage);
-				base.parentElem.find('#raytable-footer-pager').append(li);
-				++page;
+				pager.append(li);
 			}
+			
+			pager.append('<li><a href="#" aria-label="Next">&raquo;</a></li>');
+			
+// 			for (var i = params.total; i > 0; i -= base.pageSize) {
+// 				var li = jQuery('<li></li>');
+// 				if (page == base.currentPageIdx)
+// 					li = jQuery('<li class="active"></li>');
+// 				var anchor = jQuery('<a href="#" data="' + page + '">' + (page + 1) + '</a>');
+// 				li.append(anchor);
+// 				anchor.on("click", changePage);
+// 				base.parentElem.find('#raytable-footer-pager').append(li);
+// 				++page;
+// 			}
 		}
 
 		var summary = '<span id="raytable-footer-summary" style="float:right;">' + params.start + ' - ' + params.end + ' of ' + params.total + ' items</span>';
