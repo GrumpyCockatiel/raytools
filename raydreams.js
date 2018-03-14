@@ -230,14 +230,15 @@
 		// there are more items than page size
 		if ( params.total > base.pageSize )
 		{
-			var page = 0;
-			
-			if ( base.maxPageButtons < 3 )
-				base.maxPageButtons = 3;
-			
 			// the maximum number of pages needed
 			var maxPage = Math.ceil(params.total / base.pageSize);
+		
+			if ( base.maxPageButtons < 2 )
+				base.maxPageButtons = 2;
 				
+			if ( base.maxPageButtons > maxPage )
+				base.maxPageButtons = maxPage;
+
 			var startPage = base.currentPageIdx - Math.floor(base.maxPageButtons / 2);
 			
 			if (startPage < 0)
@@ -249,6 +250,8 @@
 			var first = jQuery('<li><a href="#" data="0" aria-label="Previous">&laquo;</a></li>');
 			first.on("click", changePage);
 			pager.append(first);
+			
+			var page = 0;
 			
 			for (page = startPage; page < startPage + base.maxPageButtons && page * base.pageSize < params.total ; ++page)
 			{
