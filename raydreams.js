@@ -14,7 +14,7 @@
 		headers: [], //column definitions
 		pageSize: 25, // current page size
 		currentPageIdx: 0, // current page index - zero based
-		maxPageButtons: 5, // the maximum number of pager buttons to display
+		maxPageButtons: 10, // the maximum number of pager buttons to display
 		parentElem: null, // the base HTML element
 		data: loadData, // function reference to set the data
 		rowNumbers: true, // whether to add a column with line numbers in it
@@ -137,6 +137,9 @@
 		if (options.pagesize != null && options.pagesize > 0)
 			base.pageSize = options.pagesize;
 			
+		if (options.maxPageButtons != null && options.maxPageButtons > 0)
+			base.maxPageButtons = options.maxPageButtons;
+			
 		base.rowNumbers = options.rowNumbers;
 		base.onRowClick = options.rowClickHandler;
 
@@ -231,35 +234,34 @@
 			
 			if ( base.maxPageButtons < 3 )
 				base.maxPageButtons = 3;
+			
+			// the maximum number of pages needed
+			var maxPage = Math.ceil(params.total / base.pageSize);
 				
 			var startPage = base.currentPageIdx - Math.floor(base.maxPageButtons / 2);
 			
 			if (startPage < 0)
 			{ startPage = 0; }
 			
-			pager.append('<li><a href="#" aria-label="Previous">&laquo;</a></li>');
+			if ( maxPage - startPage < base.maxPageButtons )
+			{ startPage = maxPage - base.maxPageButtons; }
 			
-			for (var p = startPage; p < startPage + base.maxPageButtons; ++p)
+			var first = jQuery('<li><a href="#" data="0" aria-label="Previous">&laquo;</a></li>');
+			first.on("click", changePage);
+			pager.append(first);
+			
+			for (page = startPage; page < startPage + base.maxPageButtons && page * base.pageSize < params.total ; ++page)
 			{
-				var li = (p == base.currentPageIdx) ? jQuery('<li class="active"></li>') : jQuery('<li></li>');
-				var anchor = jQuery('<a href="#" data="' + p + '">' + (p + 1) + '</a>');
+				var li = (page == base.currentPageIdx) ? jQuery('<li class="active"></li>') : jQuery('<li></li>');
+				var anchor = jQuery('<a href="#" data="' + page + '">' + (page + 1) + '</a>');
 				li.append(anchor);
 				anchor.on("click", changePage);
 				pager.append(li);
 			}
 			
-			pager.append('<li><a href="#" aria-label="Next">&raquo;</a></li>');
-			
-// 			for (var i = params.total; i > 0; i -= base.pageSize) {
-// 				var li = jQuery('<li></li>');
-// 				if (page == base.currentPageIdx)
-// 					li = jQuery('<li class="active"></li>');
-// 				var anchor = jQuery('<a href="#" data="' + page + '">' + (page + 1) + '</a>');
-// 				li.append(anchor);
-// 				anchor.on("click", changePage);
-// 				base.parentElem.find('#raytable-footer-pager').append(li);
-// 				++page;
-// 			}
+			var last = jQuery('<li><a href="#" data="' + (maxPage-1) + '" aria-label="Next">&raquo;</a></li>');
+			last.on("click", changePage);
+			pager.append(last);
 		}
 
 		var summary = '<span id="raytable-footer-summary" style="float:right;">' + params.start + ' - ' + params.end + ' of ' + params.total + ' items</span>';
@@ -268,6 +270,7 @@
 
 	// loads a different page of data
 	function changePage(event) {
+		// get the page from the button element
 		var button = jQuery(event.target);
 		var page = parseInt(button.attr('data'));
 
