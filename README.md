@@ -14,8 +14,10 @@ raytools.js is the only required file with dependencies on Bootstrap 3 and jQuer
 See the index and data file to see how to configure.
 
 ```
-dataTable = jQuery("#dataTable").raytable({
-	datasource: { data: [], keyfield: 'id' },
+jQuery(document).ready(function () {
+
+	dataTable = jQuery("#dataTable").raytable({
+		datasource: { data: [], keyfield: 'id' },
 		columns: [
 			{ title: "Info", icons: [{ glyph: "glyphicon-info-sign", handler: iconAction, data:"id" }], renderIf: isManager },
 			{ field: "firstName", title: "First Name", sort:true },
@@ -27,6 +29,7 @@ dataTable = jQuery("#dataTable").raytable({
 			{ title: "Delete", icons: [{ glyph: "glyphicon-trash", handler: iconAction, data: "id" }] }
 		],
 		pagesize: 13,
+		maxPageButtons: 5,
 		rowNumbers: true,
 		rowClickHandler: rowAction
 	});
