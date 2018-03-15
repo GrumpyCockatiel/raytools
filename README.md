@@ -54,4 +54,42 @@ jQuery(document).ready(function () {
 * **maxPageButtons** - (optional) the maximum number of pager buttons to display.
 * **rowClickHandler** - (optional) If the row is click and not an icon with a handler, then you can set a generic row click handler. This will set the table's currentSelection property to an object with the zero based row index as well as the keyfield ID of the object bound to that row. It will also send back a jQuery event in which event.data = {rowIdx:&lt; 0 based row index &gt;, id:&lt; object key field &gt;} to the handler.
 
+### Setting Data at Runtime
+Use the 'data' method
+The first parameter is the JSON object array and the second is the object property to use as the unique identifier
+```
+dataTable.data(myData,'id');
+```
+
+### Accessing Bound Data
+```
+for (var i; i < dataTable.datasource.data.length; ++I
+{
+	var item = dataTable.datasource.data[i];
+}
+```
+
+### Handle an Icon Click Event
+```
+function iconAction(event)
+{
+	// event is jQuery event
+	// cast it to a jQuery element and get the ray-data attribute which the field set in the definition
+	var data = jQuery(event.target).data('ray-data');
+
+	// or use event.data which is an object {id:objectKey, rowIdx:clickedRow}
+	alert('You clicked the icon with data = ' + event.data.id + ' on row ' + event.data.rowIdx );
+}
+```
+
+### Handle a Row Click Event
+```
+function rowAction(event)
+{
+	// clicking a row outside of an icon is similar - just get the ray-key attribute
+    var id = jQuery(event.target).data('ray-key');
+    alert('You clicked row ' + event.data.rowIdx + ' with object ID ' + event.data.id );
+}
+```
+
 Enjoy
