@@ -1,12 +1,11 @@
 ﻿/**
  * JSONGateway
  * This is not a required file. It's just a simple class to connect front end to back end methods.
- * 
- * 
+ * Very simple jQuery ajax JSON Get and Post wrapper
 **/
 
-var serviceBaseDEV = 'http://localhost:9345/IDMService.svc/Json/';
-var serviceBasePROD = 'http://www.prod.com/IDMService.svc/json/'
+// static service base endpoints
+var serviceBase = 'http://www.mysite.com/MyService.svc/Json/';
 
 function JSONGateway(base) {
 
@@ -16,6 +15,7 @@ function JSONGateway(base) {
 // JSON GET Request
 JSONGateway.prototype.getJsonAjax = function (method, callback, data)
 {
+	// start the query string
 	var params = '?';
 
 	if (data != null) {
@@ -61,12 +61,6 @@ JSONGateway.prototype.postJsonAjax = function (method, callback, dataBody)
 }
 
 //
-JSONGateway.prototype.doFail = function (result) {
-	alert('Error : ' + result.status + ' ' + result.statusText);
+JSONGateway.prototype.doFail = function(jqXHR, textStatus, errorThrown) {
+	alert('Error : ' + textStatus + ' - ' + errorThrown);
 }
-
-// generic error handler
-//function doError(jqXHR, textStatus, errorThrown)
-//{
-//	alert(errorThrown);
-//}
