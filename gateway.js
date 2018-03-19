@@ -7,12 +7,18 @@
 // static service base endpoints
 var serviceBase = 'http://www.mysite.com/MyService.svc/Json/';
 
-function JSONGateway(base) {
+function JSONGateway(base, cache) {
 
 	this.serviceBase = base;
+	this.cache = cache;
 }
 
-// JSON GET Request
+/**
+ * GET JSON Request
+ * @param {string} method
+ * @param {function} callback
+ * @param {object} data
+ */
 JSONGateway.prototype.getJsonAjax = function (method, callback, data)
 {
 	// start the query string
@@ -34,6 +40,7 @@ JSONGateway.prototype.getJsonAjax = function (method, callback, data)
 
 	jQuery.ajax({
 		type: "GET",
+		cache: this.cache,
 		url: this.serviceBase + method + params,
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
@@ -42,7 +49,12 @@ JSONGateway.prototype.getJsonAjax = function (method, callback, data)
 	});
 }
 
-// JSON POST Request
+/**
+ * POST JSON Request
+ * @param {string} method
+ * @param {function} callback
+ * @param {object} dataBody
+ */
 JSONGateway.prototype.postJsonAjax = function (method, callback, dataBody)
 {
 	if (dataBody != null) {
@@ -51,6 +63,7 @@ JSONGateway.prototype.postJsonAjax = function (method, callback, dataBody)
 
 	jQuery.ajax({
 		type: "POST",
+		cache: this.cache,
 		url: this.serviceBase + method,
 		contentType: "application/json; charset=utf-8",
 		data: dataBody,
