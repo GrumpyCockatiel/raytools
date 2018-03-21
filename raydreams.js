@@ -191,7 +191,7 @@
 			var cell = jQuery('<th>'+h.title+'</th>');
 
 			if (h.width != undefined)
-				cel.css('width', h.width+'px');
+				cell.css('width', h.width+'px');
 
 			if (h.sort)
 			{
