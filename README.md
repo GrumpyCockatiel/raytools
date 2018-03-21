@@ -42,6 +42,7 @@ jQuery(document).ready(function () {
 * **columns** - Columns is the array of column objects to display which mainly need a title and field to map to in the data objects.
   * field - the actual object property field name.
   * title - the column header displayed
+  * width - the width in pixels to hard code this column to.
   * icons - (optional) An arary of Glyph icons to display in the column so each column can have more than one icon.
     * glyph - the glyph's CSS class name from the Bootstrap 3 glyphicons.
     * handler - (optional) a callback to handle clicking on the icon. Column icon event handlers return a jQuery event in which event.data = {rowIdx:&lt; 0 based row index &gt;, id:&lt; object key field &gt;}. Icon clicks stop the bubbling of the event any further.
