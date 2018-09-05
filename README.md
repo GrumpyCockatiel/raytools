@@ -64,7 +64,7 @@ dataTable.data(myData,'id');
 
 ### Accessing Bound Data
 ```
-for (var i; i < dataTable.datasource.data.length; ++I
+for (var i; i < dataTable.datasource.data.length; ++i)
 {
 	var item = dataTable.datasource.data[i];
 }
