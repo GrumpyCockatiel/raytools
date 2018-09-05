@@ -101,4 +101,14 @@ function isManager(item)
 }
 ```
 
+### Handle Custom Formatting
+```
+function parseDate(item)
+{
+	// source is ISO 8601
+    var d = new Date(item.birthDate);
+    return d.toDateString();
+}
+```
+
 Enjoy
