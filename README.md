@@ -93,4 +93,12 @@ function rowAction(event)
 }
 ```
 
+### Handle a Conditional Render
+```
+function isManager(item)
+{
+	return (item.grade > 4);
+}
+```
+
 Enjoy
