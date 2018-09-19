@@ -19,7 +19,8 @@
 		data: loadData, // function reference to set the data
 		rowNumbers: true, // whether to add a column with line numbers in it
 		currentSort: null, // the current field and direction of sorting
-		currentSelection: null, // last clicked row
+		currentSelection: null, // last clicked row,
+		noDataLabel:"No Results", // label to display if there is no data in the grid
 		onRowClick: null // external handler when a row is clicked
 	};
 
@@ -219,9 +220,17 @@
 
 		// clear out the footer
 		base.parentElem.find('#raytable-footer').empty();
+		
+		// there's no data to display
+		if ( params.total < 1)
+		{
+			var summary = '<span id="raytable-footer-summary">' + base.noDataLabel + '</span>';
+			base.parentElem.find('#raytable-footer').append(summary);
+			return;
+		}
 
 		// update the summary
-		base.parentElem.find('#raytable-footer-summary').text(params.start + ' - ' + params.end + ' of ' + params.total + ' items');
+		//base.parentElem.find('#raytable-footer-summary').text(params.start + ' - ' + params.end + ' of ' + params.total + ' items');
 
 		// render pagination control
 		var pager = jQuery('<ul class="pagination pagination-sm" id="raytable-footer-pager" style="margin-top:0px;"></ul>');
@@ -230,22 +239,23 @@
 		// there are more items than page size
 		if ( params.total > base.pageSize )
 		{
-			// the maximum number of pages needed
+			// never mutate maxPageButtons, should never be less than 2
+			var totalPage = ( base.maxPageButtons < 2 ) ? 2 : base.maxPageButtons;
+		
+			// calculate maximum number of pages needed
 			var maxPage = Math.ceil(params.total / base.pageSize);
 		
-			if ( base.maxPageButtons < 2 )
-				base.maxPageButtons = 2;
-				
-			if ( base.maxPageButtons > maxPage )
-				base.maxPageButtons = maxPage;
+			if ( totalPage > maxPage )
+				totalPage = maxPage;
 
-			var startPage = base.currentPageIdx - Math.floor(base.maxPageButtons / 2);
+			// page button to render first
+			var startPage = base.currentPageIdx - Math.floor(totalPage / 2);
 			
 			if (startPage < 0)
 			{ startPage = 0; }
 			
-			if ( maxPage - startPage < base.maxPageButtons )
-			{ startPage = maxPage - base.maxPageButtons; }
+			if ( maxPage - startPage < totalPage )
+			{ startPage = maxPage - totalPage; }
 			
 			var first = jQuery('<li><a href="#" data="0" aria-label="Previous">&laquo;</a></li>');
 			first.on("click", changePage);
@@ -253,7 +263,7 @@
 			
 			var page = 0;
 			
-			for (page = startPage; page < startPage + base.maxPageButtons && page * base.pageSize < params.total ; ++page)
+			for (page = startPage; page < startPage + totalPage && page * base.pageSize < params.total ; ++page)
 			{
 				var li = (page == base.currentPageIdx) ? jQuery('<li class="active"></li>') : jQuery('<li></li>');
 				var anchor = jQuery('<a href="#" data="' + page + '">' + (page + 1) + '</a>');
