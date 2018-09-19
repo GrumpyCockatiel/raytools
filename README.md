@@ -48,11 +48,12 @@ jQuery(document).ready(function () {
     * handler - (optional) a callback to handle clicking on the icon. Column icon event handlers return a jQuery event in which event.data = {rowIdx:&lt; 0 based row index &gt;, id:&lt; object key field &gt;}. Icon clicks stop the bubbling of the event any further.
     * data - (optional) Additional data to set the ray-data attribute to.
   * sort - (optional, default is false) set to true to allowing sorting on this field.
-  * renderIf - (optional) a callback function with the signature (item)->bool, where item is the object bound to that row, that returns whether to even render the contents of the cell at all. This can be use to skip cell icons based on some condition.
+  * renderIf - (optional) a callback function with the signature (item)->bool, where item is the object bound to that row, that returns whether to even render the contents of the cell at all. This can be use to skip cell icons based on some condition and simply a shortcut to using format that returns an empty string if the condition is true.
   * format - (optional) a callback function with the signature (item)->string, where item is the object bound to that row, that returns a format string to display in that cell, such as formatting dates.
 * **pageSize** - (optional, defaults to 25) Should be self-explanatory, the number of items to display per page.
 * **rowNumbers** - (optonal) default is false) If set to trye, the first column will display an incrementing row count.
 * **maxPageButtons** - (optional) the maximum number of pager buttons to display.
+* **noDataLabel** - (optional) the text to display where there is no data to display.
 * **rowClickHandler** - (optional) If the row is click and not an icon with a handler, then you can set a generic row click handler. This will set the table's currentSelection property to an object with the zero based row index as well as the keyfield ID of the object bound to that row. It will also send back a jQuery event in which event.data = {rowIdx:&lt; 0 based row index &gt;, id:&lt; object key field &gt;} to the handler.
 
 ### Setting Data at Runtime
