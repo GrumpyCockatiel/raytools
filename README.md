@@ -7,7 +7,7 @@ I'm trying to keep this one as simple as possible.
 
 raytools.js is the only required file with dependencies on Bootstrap 3 and jQuery 1.12. It has not been upgraded to Bootstrap 4. All icons come from the Bootstrap 3 Glyphicons.
 
-[Live Demo](http://www.raydreams.com/raytable/)
+[Live Demo](http://www.raydreams.com/raytable/index.html)
 
 ![Raytools data grid](/Screenshots/screen.png)
 
