@@ -18,8 +18,6 @@
 		parentElem: null, // the base HTML element
 		data: loadData, // function reference to set the data
 		rowNumbers: { visible: true, title: "Row"}, // the row numbers property
-		//rowNumbers: true, // whether to add a column with line numbers in it
-		//rowNumbersTitle: "Row", // if rowNumbers is true, the text that will be displayed at the top
 		currentSort: null, // the current field and direction of sorting
 		currentSelection: null, // last clicked row,
 		noDataLabel: "No Results", // label to display if there is no data in the grid
@@ -153,7 +151,6 @@
 			base.maxPageButtons = options.maxPageButtons;
 			
 		base.rowNumbers = options.rowNumbers;
-		//base.rowNumbersTitle = options.rowNumbersTitle;
 		base.onRowClick = options.rowClickHandler;
 
 		// set the headers
@@ -166,8 +163,6 @@
 
 			// create header objects based on the html tags
 			for (var j = 0; j < ths.length; ++j) {
-
-				// find the data-ray-field attr
 				var field = $(ths[j]).data('ray-field');
 				var title = $(ths[j]).text();
 				base.headers.push({ field: field, title: title });
@@ -212,7 +207,6 @@
 				if ( h.field != null )
 					cell.data('field', h.field);
 
-				//var sortBtn = jQuery("<span class='rayicon sortAscIcon' style='color:LightGray' aria-hidden='true' />");
 				cell.append('&nbsp;');
 				var sortBtn = jQuery('<span></span>');
 				sortBtn.on('click', null, h.field, doSortCol);
@@ -336,17 +330,21 @@
 	}
 
 	// sorts the bound data
+	// event.data contains the field name sorted on
 	function doSortCol(event) {
-		
-		// event.data contains the field name sorted on
-
 		// set the current sort info
 		if (base.currentSort == null)
-		{ base.currentSort = { field: event.data, direction: 1 }; }
+		{
+			base.currentSort = { field: event.data, direction: 1 };
+		}
 		else if (base.currentSort.field != event.data)
-		{ base.currentSort = { field: event.data, direction: base.currentSort.direction }; }
+		{
+			base.currentSort = { field: event.data, direction: base.currentSort.direction };
+		}
 		else
-		{ base.currentSort = { field: event.data, direction: base.currentSort.direction * -1 }; }
+		{
+			base.currentSort = { field: event.data, direction: base.currentSort.direction * -1 };
+		}
 
 		// sort the data itself
 		base.datasource.data.sort( dynamicSort(event.data) );
@@ -362,11 +360,8 @@
 				function (idx, elem) {
 					var parent = jQuery(elem).parent();
 					var color = (parent.data('field') == event.data ) ? '#000000' : '#aaaaaa';
-					//jQuery(elem).removeClass('sortDscIcon');
-					//jQuery(elem).addClass('sortAscIcon');
 					jQuery(elem).empty();
 					jQuery(elem).append( jQuery(sortDescSVG).attr('fill', color) );
-					//jQuery(elem).css('color', 'LightGray');
 				}
 			);
 		}
@@ -376,19 +371,12 @@
 				function (idx, elem) {
 					var parent = jQuery(elem).parent();
 					var color = (parent.data('field') == event.data ) ? '#000000' : '#999999';
-					//jQuery(elem).removeClass('sortAscIcon');
-					//jQuery(elem).addClass('sortDscIcon');
 					jQuery(elem).empty();
 					jQuery(elem).append( jQuery(sortAscSVG).attr('fill', color) );
-					//jQuery(elem).css('color', 'LightGray');
 				}
 			);
 		}
 
-		// set the clicked icon to black
-		//var button = jQuery(event.target);
-		//alert(data);
-		//jQuery(event.target).attr('fill', '#000000')
 	}
 
 	// sort by a specified property, use prefix '-' to reverse the sort direction

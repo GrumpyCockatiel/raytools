@@ -98,7 +98,7 @@ for (var i; i < dataTable.datasource.data.length; ++i)
 function iconAction(event)
 {
 	// event is jQuery event
-	// cast it to a jQuery element and get the ray-data attribute which the field set in the definition
+	// cast it to a jQuery element and get the data-ray-data attribute which the field set in the definition
 	var data = jQuery(event.target).data('ray-data');
 
 	// or use event.data which is an object {id:objectKey, rowIdx:clickedRow}
@@ -110,7 +110,7 @@ function iconAction(event)
 ```
 function rowAction(event)
 {
-	// clicking a row outside of an icon is similar - just get the ray-key attribute
+	// clicking a row outside of an icon is similar - just get the data-ray-key attribute
     var id = jQuery(event.target).data('ray-key');
     alert('You clicked row ' + event.data.rowIdx + ' with object ID ' + event.data.id );
 }
