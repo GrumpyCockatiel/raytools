@@ -26,7 +26,7 @@ I'm trying to keep this one as simple as possible.
 
 raytools.js is the only required file with dependencies on Bootstrap 4 and jQuery.
 
-[Live Demo](http://www.raydreams.com/raytable/index.html)
+[Live Demo](http://www.raydreams.com/lib/raytable/index.html)
 
 ![Raytools data grid](/readme/screen.png)
 
