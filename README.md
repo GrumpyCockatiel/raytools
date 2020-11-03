@@ -1,15 +1,34 @@
+# Version
+
+The Master repo has been updated to use Bootstrap 4 and the minimum jQuery it has been tested with is 3.2.1.
+
+The original version has been branched over to **bootstrap3**
+
+# Change History
+
+* Dependency is now on Bootstrap 4
+* Bootstrap 3 glyph icons are no longer supported
+* rowNumbers boolean property is now an object with 2 properties `{ visible: true, "title": "Row" }`
+* On sortable columns, the `data-field` attribute has been added with the object field name as its value
+* The pager control was fixed to use Bootstrap 4.
+* On sortable columns, the sort icons are now embedded as SVG
+* For columns with icons, specify a CSS class with an image background (see HTML example)
+* The glypicon CSS class is replaced with rayicon class which is empty by default. Use it at will to affect all icons.
+
 # raytable
 I wanted a very simple to use jQuery data table that met 95% of the patterns I needed which included paging, sorting, 
 adding a few button columns with custom handlers, and using icons and styles from Bootstrap to keep it simple.
 
+I'm no Bootstrap/CSS expert so if you have some tips to clean-up the layout, feel free to pass them along. I'm totally open to snazzing it up.
+
 I know ther are TONS of js gridtables in the world but the best ones cost and others take some time to figure out all the settings.
 I'm trying to keep this one as simple as possible.
 
-raytools.js is the only required file with dependencies on Bootstrap 3 and jQuery 1.12. It has not been upgraded to Bootstrap 4. All icons come from the Bootstrap 3 Glyphicons.
+raytools.js is the only required file with dependencies on Bootstrap 4 and jQuery.
 
 [Live Demo](http://www.raydreams.com/raytable/index.html)
 
-![Raytools data grid](/Screenshots/screen.png)
+![Raytools data grid](/readme/screen.png)
 
 See the index and data file to see how to configure.
 
@@ -30,7 +49,7 @@ jQuery(document).ready(function () {
 		],
 		pagesize: 13,
 		maxPageButtons: 5,
-		rowNumbers: true,
+		rowNumbers: { visible: true, "title": "Rank" },
 		rowClickHandler: rowAction
 	});
 ```
@@ -51,7 +70,10 @@ jQuery(document).ready(function () {
   * renderIf - (optional) a callback function with the signature (item)->bool, where item is the object bound to that row, that returns whether to even render the contents of the cell at all. This can be use to skip cell icons based on some condition and simply a shortcut to using format that returns an empty string if the condition is true.
   * format - (optional) a callback function with the signature (item)->string, where item is the object bound to that row, that returns a format string to display in that cell, such as formatting dates.
 * **pageSize** - (optional, defaults to 25) Should be self-explanatory, the number of items to display per page.
-* **rowNumbers** - (optonal) default is false) If set to trye, the first column will display an incrementing row count.
+* **rowNumbers** - (optonal) Options for displaying row numbers as the left most column
+  * visble - (bool) set to true to render, otherwise just false
+  * title - (string) override the default column header which is 'Row'
+  * color - (hex string) not yet implemented, but this column background color in future versions
 * **maxPageButtons** - (optional) the maximum number of pager buttons to display.
 * **noDataLabel** - (optional) the text to display where there is no data to display.
 * **rowClickHandler** - (optional) If the row is click and not an icon with a handler, then you can set a generic row click handler. This will set the table's currentSelection property to an object with the zero based row index as well as the keyfield ID of the object bound to that row. It will also send back a jQuery event in which event.data = {rowIdx:&lt; 0 based row index &gt;, id:&lt; object key field &gt;} to the handler.
