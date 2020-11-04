@@ -28,7 +28,10 @@
 
 	var sortDescSVG = '<svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-sort-down-alt" fill="#999999" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-1 0v-10A.5.5 0 0 1 3 3z"/><path fill-rule="evenodd" d="M5.354 11.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L3 12.793l1.646-1.647a.5.5 0 0 1 .708 0zM7 6.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5zm0 3a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1h-5a.5.5 0 0 0-.5.5zm0 3a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5zm0-9a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0-.5.5z"/></svg>';
 
-	// iterates the data and fills in the table body
+	/* iterates the data and fills in the table body
+	data - the array of data to bind
+	keyField - the entity property to use an identifier or key
+	*/
 	function loadData(data, keyField) {
 
 		// remove all data records from the table
@@ -49,9 +52,10 @@
 			if (keyField != null)
 				rowStr.data( 'ray-key', data[row][keyField] );
 
-			// add a column to hold row numbers
+			// column to hold row numbers if implemented
 			if (base.rowNumbers.visible) {
-				rowStr.append('<td>' + (row + 1) + '</td>');
+				var style = ( base.rowNumbers.styleClass != null ) ? " class='"+ base.rowNumbers.styleClass + "'" : "";
+				rowStr.append('<td' + style + '>' + (row + 1) + '</td>');
 			}
 
 			// set the col index if there are row numbers

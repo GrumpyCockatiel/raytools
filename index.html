@@ -30,8 +30,13 @@
     background: url(./images/delete.png);
     width: 20px;
     height: 20px;
-        }
-        
+}
+
+.rowNumCell
+{
+    font-weight: bold;
+    background-color: aquamarine;
+}
 
 </style>
 
@@ -56,7 +61,7 @@
                 ],
             	pagesize: 17,
             	maxPageButtons: 7,
-                rowNumbers: { visible: true, "title": "Rank" },
+                rowNumbers: { visible: true, "title": "Rank", styleClass:'rowNumCell' },
             	rowClickHandler: rowAction
         	});
 
@@ -143,7 +148,7 @@
             </thead>-->
         </div>
         <div><a href="https://github.com/GrumpyCockatiel/raytools">Download or Clone from github</a></div>
-        <div>&copy;2016-2018 by Tag Guillory</div>
+        <div>&copy;2016-2020 by Tag Guillory</div>
     </div>
 </body>
 
