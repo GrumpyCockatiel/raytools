@@ -18,13 +18,13 @@ The original version has been branched over to **bootstrap3** and archived in th
 # Change History
 
 * Dependency is now on Bootstrap 4
-* Bootstrap 3 glyph icons are no longer directly supported
+* Bootstrap 3 glyph icons are no longer directly supported but you can still use Bootstrap Icons
 * rowNumbers boolean property is now an object with 2 properties `{ visible: true, "title": "Row" }`
 * On sortable columns, the `data-field` attribute has been added with the object field name as its value
 * The pager control was fixed to use Bootstrap 4.
 * On sortable columns, the sort icons are now embedded as SVG
 * For columns with icons, specify a CSS class with an image background (see HTML example)
-* The glypicon CSS class is replaced with rayicon class which is empty by default. Use it at will to affect all icons.
+* The glypicon CSS class is replaced with `rayicon` class which is empty by default. Use it at will to affect all icons.
 
 # Implementation
 
@@ -58,6 +58,24 @@ jQuery(document).ready(function () {
 	});
 ```
 
+### Using your own icons
+
+```
+/* the rayicon class is added to each icon so you can modify them all */
+.rayicon {
+    background-repeat: no-repeat;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+/* define a custom icon */
+.infoIcon {
+    background: url(./images/information.png);
+    width: 16px;
+    height: 16px;
+}
+```
+
 ## Parameters & Options
 The following documents parameters you can set in constructor options:
 
@@ -69,7 +87,7 @@ The following documents parameters you can set in constructor options:
   * title - the column header displayed
   * width - the width in pixels to hard code this column to.
   * icons - (optional) An arary of Glyph icons to display in the column so each column can have more than one icon.
-    * glyph - the glyph's CSS class name from the Bootstrap 3 glyphicons.
+    * glyph - the glyph's CSS class name either from your own custom CSS (see example) or a Bootstrap icon graph class name `bi-trash`
     * handler - (optional) a callback to handle clicking on the icon. Column icon event handlers return a jQuery event in which event.data = {rowIdx:&lt; 0 based row index &gt;, id:&lt; object key field &gt;}. Icon clicks stop the bubbling of the event any further.
     * data - (optional) Additional data to set the ray-data attribute to - a property on the data entity
   * sort - (optional, default is false) set to true to allowing sorting on this field.

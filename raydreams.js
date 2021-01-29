@@ -1,9 +1,10 @@
 ﻿/**
  * Ray Tools
- * Copyright (c) 2016-2020 Tag Guillory
+ * Copyright (c) 2016-2021 TAG Digital Studios
  * Created : 2016-Feb-18
  * Last Update : 2020-Nov-03
  * Version : 0.9.2
+ * License : MIT License
 **/
 
 (function ($) {
