@@ -1,4 +1,7 @@
 # raygrid
+
+![Raytools data grid](/docs/screen.png)
+
 I wanted a very simple to use JavaScript data table that met 95% of the patterns I needed which included paging, sorting, 
 adding a few button columns with custom handlers, and using icons and styles from Bootstrap to keep it simple. This started out of me getting totally hosed by Telerik's Kendo UI jQuery in which the grid was originally free and then they started charging.
 
@@ -24,15 +27,14 @@ It also requires [Bootstrap 5 icons](https://icons.getbootstrap.com/).
 * Added properties to specify the sort icons.
 * Added Getter/Setter for the data itself.
 * Added Getter for the last selected data row.
-* Added options.tableStyleClasses to set multiple style classes on the table element itself.
+* Added `options.tableStyleClasses` to set multiple style classes on the table element itself.
+* Each row is set with a `data-key` attribute set to the key field value
 
 # Implementation
 
 raygrid.js is the only required file with dependencies on Bootstrap 5 and Bootstrap Icons.
 
 [Live Demo](http://www.raydreams.com/raygrid.html)
-
-![Raytools data grid](/docs/screen.png)
 
 See the `index.html` to see how to configure.
 
