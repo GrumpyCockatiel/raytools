@@ -30,11 +30,11 @@ It also requires [Bootstrap 5 icons](https://icons.getbootstrap.com/).
 
 raygrid.js is the only required file with dependencies on Bootstrap 5 and Bootstrap Icons.
 
-[Live Demo](http://www.raydreams.com/lib/raytable/index.html)
+[Live Demo](http://www.raydreams.com/raygrid.html)
 
 ![Raytools data grid](/docs/screen.png)
 
-See the index and data file to see how to configure.
+See the `index.html` to see how to configure.
 
 ```javascript
 
