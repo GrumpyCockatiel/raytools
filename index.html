@@ -104,7 +104,6 @@
         function loadData(json) {
             const len = document.getElementById("sizeMenu").value;
             dataTable.data = json.slice(0, len);
-            dataTable.pageIndex = 0;
             dataTable.render();
         }
 

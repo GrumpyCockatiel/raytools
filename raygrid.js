@@ -57,7 +57,10 @@ export class RayGrid {
     /* sets the data */
     set data(data) {
         this.#data = data;
-        // TODO - check the current page index is not too large for the new data
+        
+        // check the current page index is not too large for the new data
+        if ( this.#currentPageIdx > this.maxPages - 1 )
+            this.#currentPageIdx = this.maxPages - 1;
     }
 
     /* get the last selected data row */
@@ -77,16 +80,16 @@ export class RayGrid {
         this.#currentPageIdx = (page < this.maxPages ) ? page : 0;
     }
 
+    /* get the maximum possible pages based on the current data and page size */
+    get maxPages() {
+        return Math.ceil(this.data.length / this.#pageSize);
+    }
+
     /* check a string for an empty or all whitespace value */
     #isEmpty = (s) => s === null || s === undefined ? true : /^[\s\xa0]*$/.test(s);
 
     /* adds and array of CSS classes to an element */
     #addAllClasses = (elem, classArray) => { classArray.forEach( style => elem.classList.add(style) ); }
-
-    /* get the maximum possible pages based on the current data and page size */
-    get maxPages() {
-        return Math.ceil(this.data.length / this.#pageSize);
-    }
 
     /*  render the table 
         you must call explcitly for now to give a chance the modify the data before rendering
