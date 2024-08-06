@@ -24,18 +24,20 @@
 <body>
     <div class="container">
         <p class="h3">RayGrid Custom Table Grid Control</p>
-        <!-- <form>
-            <div class="form-group form-inline" style="margin-bottom:10px;">
-                <input type="button" onclick="doLoad(this)" value="Load Some Data" class="btn btn-primary" />&nbsp;
-                <select name="sizeMenu" id="sizeMenu" class="form-control" style="width:200px;">
-                    <option value="-1">All Records</option>
-                    <option value="50">50 Records</option>
-                    <option value="100">100 Records</option>
-                    <option value="500">500 Records</option>
-                    <option value="0">Empty</option>
-                </select>
+
+        <form class="mb-2">
+            <div class="row">
+                <div class="col-2">
+                    <select name="sizeMenu" id="sizeMenu" class="form-control form-select col-2">
+                        <option value="50">50 Records</option>
+                        <option value="100">100 Records</option>
+                        <option value="500">500 Records</option>
+                        <option value="0">Empty</option>
+                    </select>
+                </div>
+                <button id="reloadButton" type="button" class="btn btn-primary col-3">Reload Some Random Data</button>
             </div>
-        </form> -->
+        </form>
 
         <div id="dataTable"></div>
 
@@ -79,6 +81,8 @@
                 rowClickHandler: rowAction
             });
 
+            document.getElementById("reloadButton").addEventListener('click', () => { getData(); });
+
             getData();
         });
 
@@ -98,7 +102,9 @@
 
         /* callback when data is loaded */
         function loadData(json) {
-            dataTable.data = json;
+            const len = document.getElementById("sizeMenu").value;
+            dataTable.data = json.slice(0, len);
+            dataTable.pageIndex = 0;
             dataTable.render();
         }
 

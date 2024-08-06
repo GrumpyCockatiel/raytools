@@ -12,7 +12,7 @@ I'm no Bootstrap/CSS guru so if you have some tips to clean-up the layout, feel 
 
 There's no plan to make this an inline editable grid table since my prefered UI is to use edit modals when a row is clicked.
 
-# Version 1.0.0
+# Version 1.0.1
 
 The Master repo has been updated to use Bootstrap 5.2.3 and eliminates the dependency on jQuery.
 
@@ -29,6 +29,7 @@ It also requires [Bootstrap 5 icons](https://icons.getbootstrap.com/).
 * Added Getter for the last selected data row.
 * Added `options.tableStyleClasses` to set multiple style classes on the table element itself.
 * Each row is set with a `data-key` attribute set to the key field value
+* Added Getter/Setter for the current page index to set if you load new data.
 
 # Implementation
 

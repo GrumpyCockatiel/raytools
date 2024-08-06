@@ -49,14 +49,15 @@ export class RayGrid {
         }
     }
 
-    /* gets the entire model object */
+    /* gets the data */
     get data() {
         return this.#data;
     }
 
-    /* sets the entire model object */
+    /* sets the data */
     set data(data) {
         this.#data = data;
+        // TODO - check the current page index is not too large for the new data
     }
 
     /* get the last selected data row */
@@ -64,11 +65,28 @@ export class RayGrid {
         return this.#currentSelection;
     }
 
+    /* get the current 0 base page index */
+    get pageIndex() {
+        return this.#currentPageIdx;
+    }
+
+    /* sets the current 0 base page index */
+    set pageIndex( page ) {
+        if ( page < 0 ) page = 0;
+        
+        this.#currentPageIdx = (page < this.maxPages ) ? page : 0;
+    }
+
     /* check a string for an empty or all whitespace value */
     #isEmpty = (s) => s === null || s === undefined ? true : /^[\s\xa0]*$/.test(s);
 
     /* adds and array of CSS classes to an element */
     #addAllClasses = (elem, classArray) => { classArray.forEach( style => elem.classList.add(style) ); }
+
+    /* get the maximum possible pages based on the current data and page size */
+    get maxPages() {
+        return Math.ceil(this.data.length / this.#pageSize);
+    }
 
     /*  render the table 
         you must call explcitly for now to give a chance the modify the data before rendering
@@ -282,7 +300,7 @@ export class RayGrid {
         let totalPage = (this.#maxPageButtons < 2) ? 2 : this.#maxPageButtons;
 
         // calculate maximum possible pages ever needed
-        let maxPage = Math.ceil( this.data.length / this.#pageSize );
+        const maxPage = this.maxPages;
 
         if ( totalPage > maxPage )
             totalPage = maxPage;
