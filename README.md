@@ -32,7 +32,7 @@ raygrid.js is the only required file with dependencies on Bootstrap 5 and Bootst
 
 [Live Demo](http://www.raydreams.com/lib/raytable/index.html)
 
-![Raytools data grid](/readme/screen.png)
+![Raytools data grid](/docs/screen.png)
 
 See the index and data file to see how to configure.
 
