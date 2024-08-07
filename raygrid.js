@@ -89,7 +89,12 @@ export class RayGrid {
     #isEmpty = (s) => s === null || s === undefined ? true : /^[\s\xa0]*$/.test(s);
 
     /* adds and array of CSS classes to an element */
-    #addAllClasses = (elem, classArray) => { classArray.forEach( style => elem.classList.add(style) ); }
+    #addAllClasses = (elem, classArray) => {
+        if ( !classArray || classArray.length < 1 )
+            return;
+        
+        classArray.forEach( style => elem.classList.add(style) );
+    }
 
     /*  render the table 
         you must call explcitly for now to give a chance the modify the data before rendering
