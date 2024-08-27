@@ -69,13 +69,13 @@
                     { field: "firstName", title: "First Name", sort: true },
                     { field: "lastName", title: "LastName", sort: true },
                     { field: "title", title: "Title", sort: false },
-                    { field: "email", title: "Email" },
+                    { field: "email", title: "Email", format: formatHyperlink },
                     { field: "grade", title: "Grade", sort: true },
                     { field: "ssn", title: "SSN", sort: false },
                     { field: "dob", title: "DOB", sort: true, format: (item) => { return new Date(item.dob).toLocaleString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }); } },
                     { title: "Delete", icons: [{ glyph: "trash", handler: deleteRecord, data: "color" }] }
                 ],
-                rowNumbers: { visible: true, title: "Row", styleClasses: ['rowNumStyle'] },
+                rowNumbers: { visible: true, styleClasses: ['rowNumStyle'] },
                 pageSize: 11,
                 maxPageButtons: 5,
                 rowClickHandler: rowAction
@@ -105,6 +105,10 @@
             const len = document.getElementById("sizeMenu").value;
             dataTable.data = json.slice(0, len);
             dataTable.render();
+        }
+
+        function formatHyperlink(item) {
+            return `<a href="https://www.linkedin.com/">${item.email}</a>`;
         }
 
         /* row clicked event handler */

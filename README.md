@@ -12,13 +12,13 @@ I'm no Bootstrap/CSS guru so if you have some tips to clean-up the layout, feel 
 
 There's no plan to make this an inline editable grid table since my prefered UI is to use edit modals when a row is clicked.
 
-# Version 1.0.2
+# Version 1.0.3
 
 The Master repo has been updated to use Bootstrap 5.2.3 and eliminates the dependency on jQuery.
 
 It also requires [Bootstrap 5 icons](https://icons.getbootstrap.com/).
 
-# Change History
+## Change History 1.0.3
 
 * The main control file is now `raygrid.js` since there might be other controls later.
 * Dependency is now on Bootstrap 5.
@@ -95,7 +95,8 @@ The following documents parameters you can set in constructor options:
     * data - (optional) Additional data field value returned in the event handler
   * sort - (optional, default is false) set to true to allowing sorting on this field.
   * renderIf - (optional) a callback function with the signature `(dataItem) -> bool`, where item is the object bound to that row, that returns whether to even render the contents of the cell at all. This can be use to skip cell icons based on some condition and simply a shortcut to using format that returns an empty string if the condition is true.
-  * format - (optional) a callback function with the signature `(dataItem) -> string`, where item is the object bound to that row, that returns a format string to display in that cell, such as formatting dates.
+  * format - (optional) a callback function with the signature `(dataItem) -> string`, where item is the object bound to that row, that returns a format string to display in that cell, such as formatting dates. **WARNING** this sets the InnerHTML so only set data from a trusted source.
+  * width - (optional) If specified with a positive integer will set a style width property on the column in pixels.
 * **pageSize** - (optional, defaults to 25) Should be self-explanatory, the number of items to display per page.
 * **rowNumbers** - (optonal) Options for displaying row numbers as the left most column
   * visble - (bool) set to true to render, otherwise just false
@@ -143,10 +144,17 @@ function isManager(item) {
 ```
 
 ### Handle Custom Formatting
+Sets the `InnerHTML` property for now. Will change to send back only the HTML element.
+
 ```javascript
-function formatDate(item)
-{
+function formatDate(item) {
   return new Date(item).toLocaleString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+}
+```
+
+```javascript
+function formatHyperlink(item) {
+  return `<a href="https://www.linkedin.com/">${item.email}</a>`;
 }
 ```
 

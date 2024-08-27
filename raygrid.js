@@ -111,17 +111,19 @@ export class RayGrid {
         // show row numbers
         if (this.#rowNumbers.visible) {
             let th = document.createElement("th");
-            th.innerHTML = `${this.#rowNumbers.title}`;
+            th.innerHTML = (this.#rowNumbers.title) ? `${this.#rowNumbers.title}` : RayGrid.space;
             headerRow.appendChild(th);
         }
 
         // set headers
         this.#columns.forEach( (header, _) => {
             let th = document.createElement("th");
+            if (header.width && header.width > 0)
+                th.style.width = `${header.width}px`;
             let span = document.createElement("span");
-            span.innerHTML = `${header.title}`;
+            span.innerText = `${header.title}`;
             th.appendChild(span);
-            
+
             // is sortable
             if ( header.sort && header.field )
             {
@@ -164,7 +166,7 @@ export class RayGrid {
             if (this.#rowNumbers.visible) {
                 let td = document.createElement("td");
                 this.#addAllClasses(td, this.#rowNumbers.styleClasses);
-                td.innerHTML = `${1 + dataIdx }`;
+                td.innerText = `${1 + dataIdx }`;
                 tr.appendChild(td);
             }
 
@@ -254,7 +256,7 @@ export class RayGrid {
         let end = Math.min( start + this.#pageSize, this.#data.length );
 
         let summary = document.createElement("div");
-        summary.innerHTML = `${start + 1} - ${end} of ${this.#data.length} items`;
+        summary.innerText = `${start + 1} - ${end} of ${this.#data.length} items`;
         footer.appendChild(pagerNav);
         footer.appendChild(summary);
 
@@ -267,7 +269,7 @@ export class RayGrid {
         let div = document.createElement("div");
         this.#addAllClasses(div, ['d-flex', 'justify-content-center']);
         let span = document.createElement("span");
-        span.innerHTML = `${this.#noDataLabel}`;
+        span.innerText = `${this.#noDataLabel}`;
 
         // replace the current table
         div.appendChild(span);
