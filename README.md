@@ -12,7 +12,7 @@ I'm no Bootstrap/CSS guru so if you have some tips to clean-up the layout, feel 
 
 There's no plan to make this an inline editable grid table since my prefered UI is to use edit modals when a row is clicked.
 
-## npm package
+## Installation
 
 You can [download the package from NPM](https://www.npmjs.com/package/@raydreams/jscontrols)
 
@@ -37,7 +37,7 @@ It also requires [Bootstrap 5 icons](https://icons.getbootstrap.com/).
 
 # Implementation
 
-raygrid.js is the only required file with dependencies on Bootstrap 5 and Bootstrap Icons.
+`raygrid.js` is the only required file with dependencies on Bootstrap 5 and Bootstrap Icons.
 
 [Live Demo](http://www.raydreams.com/raygrid.html)
 
