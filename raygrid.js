@@ -56,6 +56,9 @@ export default class RayGrid {
 
     /* sets the data */
     set data(data) {
+        if ( !Array.isArray(data) )
+            this.#debug('Bound data is not an array of records.');
+
         this.#data = data;
         
         // check the current page index is not too large for the new data

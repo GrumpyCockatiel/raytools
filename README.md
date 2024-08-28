@@ -81,6 +81,13 @@ function loadData(myData) {
 
 The whole original idea was to just use the Bootstrap icons - then Bootstrap 4 happened. Version 1 of RayGrid finally goes back to just specifying the Bootstrap 5 icon label such as `arrow-bar-left`.
 
+Thus, on any column use can add an array of interactive icons:
+```javascript
+icons: [{ glyph: "trash", handler: deleteRecord, data: "someField" }]
+```
+
+The glyph name is just the Bootstrap 5 icon name.
+
 ## Parameters & Options
 The following documents parameters you can set in constructor options:
 
@@ -106,14 +113,18 @@ The following documents parameters you can set in constructor options:
 * **noDataLabel** - (optional) the text to display where there is no data to display.
 * **rowClickHandler** - (optional) If the row is clicked you can set a generic row click handler. This will set the table's currentSelection property to an object with the zero based row index as well as the keyfield ID of the object bound to that row. It will also send back a JS event as well as some additional data `{ idx: dataIdx, id: rowKey }`.
 
+## Accessors
+
+There are a few getters/setters on the table property for changing the data programmatically:
+
 ### Setting Data at Runtime
 Use the 'data' property to set the data then you must call `render()`.
-```
+```javascript
 dataTable.data = myData;
 dataTable.render();
 ```
 
-### Accessing Bound Data
+#### Accessing Bound Data
 ```javascript
 for (var i; i < dataTable.data.length; ++i)
 {
@@ -121,7 +132,22 @@ for (var i; i < dataTable.data.length; ++i)
 }
 ```
 
-### Handle an Icon Click Event
+#### Selected
+Get the last selected or clicked record
+```javascript
+let item = dataTable.selected;
+```
+
+#### Page Index
+Get or set the page index which is 0 based for the first page
+```javascript
+const pages = dataTable.maxPages;
+dataTable.pageIndex = 5;
+```
+
+## Event Handlers
+
+#### Handle an Icon Click Event
 ```javascript
 function iconAction(event, item) {
     alert(`Favorite Color for item ${item.idx} is ${item.value}`);
@@ -129,21 +155,21 @@ function iconAction(event, item) {
 }
 ```
 
-### Handle a Row Click Event
+#### Handle a Row Click Event
 ```javascript
 function rowAction(event, item) {
     alert(JSON.stringify(item));
 }
 ```
 
-### Handle a Conditional Render
+#### Handle a Conditional Render
 ```javascript
 function isManager(item) {
 	return (item.grade > 3);
 }
 ```
 
-### Handle Custom Formatting
+#### Handle Custom Formatting
 Sets the `InnerHTML` property for now. Will change to send back only the HTML element.
 
 ```javascript
