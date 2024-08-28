@@ -12,6 +12,10 @@ I'm no Bootstrap/CSS guru so if you have some tips to clean-up the layout, feel 
 
 There's no plan to make this an inline editable grid table since my prefered UI is to use edit modals when a row is clicked.
 
+## npm package
+
+You can [download the package from NPM](https://www.npmjs.com/package/@raydreams/jscontrols)
+
 # Version 1.0.7
 
 The Master repo has been updated to use Bootstrap 5.2.3 and eliminates the dependency on jQuery.
