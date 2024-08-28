@@ -6,7 +6,7 @@
  * Version : 1.0.2
  * License : MIT License
 **/
-export class RayGrid {
+export default class RayGrid {
 
     static space = "&nbsp;";
    
