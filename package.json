@@ -1,0 +1,27 @@
+{
+  "name": "@raydreams/jscontrols",
+  "version": "1.0.7",
+  "description": "Common.js + Bootstrap 5 UI controls library",
+  "main": "dist/raygrid.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrumpyCockatiel/raytools.git"
+  },
+  "keywords": [
+    "javscript",
+    "bootstrap",
+    "controls"
+  ],
+  "author": "TAG Digital Studios",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GrumpyCockatiel/raytools/issues"
+  },
+  "homepage": "https://www.raydreams.com"
+}

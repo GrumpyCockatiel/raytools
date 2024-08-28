@@ -1,11 +1,4 @@
-/**
- * Ray Tools
- * Copyright (c) 2016-2024 TAG Digital Studios
- * Created : 2016-Feb-18
- * Last Update : 2024-Aug-06
- * Version : 1.0.2
- * License : MIT License
-**/
+/* a Grid Table control */
 export default class RayGrid {
 
     static space = "&nbsp;";
