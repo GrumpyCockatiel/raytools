@@ -16,7 +16,7 @@ There's no plan to make this an inline editable grid table since my prefered UI 
 
 You can [download the package from NPM](https://www.npmjs.com/package/@raydreams/jscontrols)
 
-# Version 1.0.7
+# Version 1.0.8
 
 The Master repo has been updated to use Bootstrap 5.2.3 and eliminates the dependency on jQuery.
 
