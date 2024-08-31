@@ -16,7 +16,7 @@ There's no plan to make this an inline editable grid table since my prefered UI 
 
 You can [download the package from NPM](https://www.npmjs.com/package/@raydreams/jscontrols)
 
-# Version 1.0.8
+# Version 1.0.9
 
 The Master repo has been updated to use Bootstrap 5.2.3 and eliminates the dependency on jQuery.
 
@@ -96,7 +96,7 @@ The glyph name is just the Bootstrap 5 icon name.
 The following documents parameters you can set in constructor options:
 
 * **keyfield** - keyfield is the object property to use to identify each unique row object - usually a string, GUID or Int unique identifier.
-*  **styleClasses** - By default the `table` class is set - but this string array allows you to specify other Bootstrap table style classes as options.
+* **styleClasses** - By default the `table` class is set - but this string array allows you to specify other Bootstrap table style classes as options.
 * **columns** - Columns is the array of column objects to display which mainly need a title and field to map to in the data objects.
   * field - the actual object property field name.
   * title - the column header displayed
@@ -115,7 +115,7 @@ The following documents parameters you can set in constructor options:
   * styleClass - (string) the CSS class to set on each <td> in this column
 * **maxPageButtons** - (optional) the maximum number of pager buttons to display.
 * **noDataLabel** - (optional) the text to display where there is no data to display.
-* **rowClickHandler** - (optional) If the row is clicked you can set a generic row click handler. This will set the table's currentSelection property to an object with the zero based row index as well as the keyfield ID of the object bound to that row. It will also send back a JS event as well as some additional data `{ idx: dataIdx, id: rowKey }`.
+* **rowClickHandler** - (optional) If the row is clicked you can set a generic row click handler. This will set the table's currentSelection property to an object with the zero based row index as well as the keyfield ID of the object bound to that row. It will also send back a JS event as well as some additional data `{ idx: dataIdx, id: rowKey }`. Using row click events in combination with cell icon events may cause weirdness.
 
 ## Accessors
 
