@@ -16,24 +16,11 @@ There's no plan to make this an inline editable grid table since my prefered UI 
 
 You can [download the package from NPM](https://www.npmjs.com/package/@raydreams/jscontrols)
 
-# Version 1.0.9
+# Version 1.0.10
 
 The Master repo has been updated to use Bootstrap 5.2.3 and eliminates the dependency on jQuery.
 
 It also requires [Bootstrap 5 icons](https://icons.getbootstrap.com/).
-
-## Change History 1.0.3
-
-* The main control file is now `raygrid.js` since there might be other controls later.
-* Dependency is now on Bootstrap 5.
-* Dependency on jQuery has been removed.
-* Bootstrap glyph icons are supported again.
-* Added properties to specify the sort icons.
-* Added Getter/Setter for the data itself.
-* Added Getter for the last selected data row.
-* Added `options.tableStyleClasses` to set multiple style classes on the table element itself.
-* Each row is set with a `data-key` attribute set to the key field value
-* Added Getter/Setter for the current page index to set if you load new data.
 
 # Implementation
 
@@ -189,3 +176,20 @@ function formatHyperlink(item) {
 ```
 
 Enjoy
+
+## Change History 1.0.10
+* Bug fixes
+* Documentation updates
+
+## Change History 1.0.3
+
+* The main control file is now `raygrid.js` since there might be other controls later.
+* Dependency is now on Bootstrap 5.
+* Dependency on jQuery has been removed.
+* Bootstrap glyph icons are supported again.
+* Added properties to specify the sort icons.
+* Added Getter/Setter for the data itself.
+* Added Getter for the last selected data row.
+* Added `options.tableStyleClasses` to set multiple style classes on the table element itself.
+* Each row is set with a `data-key` attribute set to the key field value
+* Added Getter/Setter for the current page index to set if you load new data.

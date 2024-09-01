@@ -1,6 +1,6 @@
 {
   "name": "@raydreams/jscontrols",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Common.js + Bootstrap 5 UI controls library",
   "main": "dist/raygrid.js",
   "directories": {

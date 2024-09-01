@@ -136,13 +136,21 @@ export default class RayGrid {
         header.appendChild(headerRow);
         table.appendChild(header);
 
-        // create the table body
+        // bail if there is no data
+        if (this.#data.length < 1) {
+            this.#parentElem.replaceChildren();
+            this.#parentElem.appendChild(table);
+            this.#parentElem.appendChild(this.#renderNoData());
+            return
+        }
+
+        // start a the table body
         let body = document.createElement("tbody");
 
-        // iterate each data row
+        // iterate page index
         for (let idx = 0; idx < this.#pageSize; ++idx )
         {
-            // the actual data index
+            // calc the data offset index
             let dataIdx = idx + (this.#currentPageIdx * this.#pageSize);
 
             if ( dataIdx >= this.#data.length )
@@ -204,17 +212,15 @@ export default class RayGrid {
             body.appendChild(tr);
         }
 
+        // append the body to the table
         table.appendChild(body);
 
         // replace the current table
         this.#parentElem.replaceChildren();
         this.#parentElem.appendChild(table);
 
-        // render footer
-        if (this.#data.length < 1)
-            this.#parentElem.appendChild(this.#renderNoData() );
-        else
-            this.#parentElem.appendChild( this.#renderFooter() );
+        // add footer
+        this.#parentElem.appendChild( this.#renderFooter() );
     }
 
     /* renders just the footer */

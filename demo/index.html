@@ -75,7 +75,7 @@
                     { field: "dob", title: "DOB", sort: true, format: (item) => { return new Date(item.dob).toLocaleString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }); } },
                     { title: "Delete", icons: [{ glyph: "trash", handler: deleteRecord, data: "color" }] }
                 ],
-                rowNumbers: { visible: true, styleClasses: ['rowNumStyle'] },
+                rowNumbers: { visible: true, title: 'Row', styleClasses: ['rowNumStyle'] },
                 pageSize: 11,
                 maxPageButtons: 5,
                 rowClickHandler: rowAction
