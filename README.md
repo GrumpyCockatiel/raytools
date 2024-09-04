@@ -1,4 +1,6 @@
-# raygrid
+# raytools 1.1.0
+
+Raytools is my personal collection of Javascript controls that depend on Bootstrap 5 (that may change later to no dependencies or multiple CSS libs).
 
 ![Raytools data grid](/docs/screen.png)
 
@@ -16,23 +18,17 @@ There's no plan to make this an inline editable grid table since my prefered UI 
 
 You can [download the package from NPM](https://www.npmjs.com/package/@raydreams/jscontrols)
 
-# Version 1.0.10
+## Implementation
 
-The Master repo has been updated to use Bootstrap 5.2.3 and eliminates the dependency on jQuery.
+Bootstrap 5 and Bootstrap Icons are a required dependency.
 
-It also requires [Bootstrap 5 icons](https://icons.getbootstrap.com/).
+[Live Demo](http://www.raydreams.com/raygrid)
 
-# Implementation
-
-`raygrid.js` is the only required file with dependencies on Bootstrap 5 and Bootstrap Icons.
-
-[Live Demo](http://www.raydreams.com/raygrid.html)
-
-See the `index.html` to see how to configure.
+See `demo/index.html` to see how to configure.
 
 ```javascript
 
-import { RayGrid } from "./raygrid.js";
+import { RayGrid } from '@raydreams/jscontrols'
 
 var dataTable = null;
 
@@ -55,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         rowNumbers: { visible: true, title: "Row", styleClasses: ['rowNumStyle'], },
         pageSize: 11,
         maxPageButtons: 5,
+        footer: { autoHide: true },
         rowClickHandler: rowAction
     });
 
@@ -77,12 +74,12 @@ Thus, on any column use can add an array of interactive icons:
 icons: [{ glyph: "trash", handler: deleteRecord, data: "someField" }]
 ```
 
-The glyph name is just the Bootstrap 5 icon name.
+The glyph name is just the [Bootstrap 5 icon](https://icons.getbootstrap.com/) name.
 
 ## Parameters & Options
 The following documents parameters you can set in constructor options:
 
-* **keyfield** - keyfield is the object property to use to identify each unique row object - usually a string, GUID or Int unique identifier.
+* **keyfield** - keyfield is the object property to use to identify each unique row object - usually a string, GUID or INT unique identifier.
 * **styleClasses** - By default the `table` class is set - but this string array allows you to specify other Bootstrap table style classes as options.
 * **columns** - Columns is the array of column objects to display which mainly need a title and field to map to in the data objects.
   * field - the actual object property field name.
@@ -103,13 +100,15 @@ The following documents parameters you can set in constructor options:
 * **maxPageButtons** - (optional) the maximum number of pager buttons to display.
 * **noDataLabel** - (optional) the text to display where there is no data to display.
 * **rowClickHandler** - (optional) If the row is clicked you can set a generic row click handler. This will set the table's currentSelection property to an object with the zero based row index as well as the keyfield ID of the object bound to that row. It will also send back a JS event as well as some additional data `{ idx: dataIdx, id: rowKey }`. Using row click events in combination with cell icon events may cause weirdness.
+* **footer** - (optonal) Options for displaying the table footer containing the pager and summary
+  * autoHide - (bool) When true will hide the pager if there is only a single page 
 
 ## Accessors
 
 There are a few getters/setters on the table property for changing the data programmatically:
 
 ### Setting Data at Runtime
-Use the 'data' property to set the data then you must call `render()`.
+Use the 'data' property to set the data then you must call `render()` explicitly.
 ```javascript
 dataTable.data = myData;
 dataTable.render();
@@ -138,7 +137,7 @@ dataTable.pageIndex = 5;
 
 ## Event Handlers
 
-#### Handle an Icon Click Event
+### Handle an Icon Click Event
 ```javascript
 function iconAction(event, item) {
     alert(`Favorite Color for item ${item.idx} is ${item.value}`);
@@ -161,7 +160,7 @@ function isManager(item) {
 ```
 
 #### Handle Custom Formatting
-Sets the `InnerHTML` property for now. Will change to send back only the HTML element.
+Sets the `InnerHTML` property for now so be careful. Will change to send back only the HTML element.
 
 ```javascript
 function formatDate(item) {
@@ -175,13 +174,65 @@ function formatHyperlink(item) {
 }
 ```
 
+## Using with vue.js
+
+I use vue.js but I really only use it for the templating and routing i.e. I don't use it the **vue way** with all the HTML attribute conditionals. This make my code more portable if I want to change to something else later.
+
+So something like this works perfectly fine in vue.
+
+```javascript
+<script setup>
+
+import { onMounted } from 'vue'
+import { RayGrid } from '@raydreams/jscontrols'
+
+let dataTable = null;
+
+onMounted( () => {
+
+    // define the data table using a parent block element like div
+    dataTable = new RayGrid(document.getElementById("dataTable"), { 
+        keyfield:'id',
+        styleClasses: ['table-bordered','table-hover'],
+        columns:[
+            { title: "Info", icons:[ { glyph: "info-circle-fill", handler: iconAction, data: "color" }], renderIf:isManager },
+            { field: "firstName", title: "First Name", sort: true },
+            { field: "lastName", title: "LastName", sort: true },
+            { field: "title", title: "Title", sort: false },
+            { field: "email", title: "Email" },
+            { field: "grade", title: "Grade", sort: true },
+            { field: "ssn", title: "SSN", sort: false },
+            { field: "dob", title: "DOB", sort: true, format: (item) => { return new Date(item.dob).toLocaleString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }); } },
+            { title: "Delete", icons: [{ glyph: "trash", handler: deleteRecord, data: "color" }]}
+        ],
+        rowNumbers: { visible: true, title: "Row", styleClasses: ['rowNumStyle'] },
+        pageSize: 13,
+        maxPageButtons: 7,
+        rowClickHandler: rowAction
+    });
+
+    doGetData();
+})
+
+```
+
 Enjoy
 
-## Change History 1.0.10
+## Change History
+
+### Change History 1.1.0
+
+* Added RayDropdown.
+* Added being able to hide the pager if there is only one page.
+* Fixed bugs when there is no data.
+* Moved common utility functions to `utils.js`
+
+### Change History 1.0.10
+
 * Bug fixes
 * Documentation updates
 
-## Change History 1.0.3
+### Change History 1.0.3
 
 * The main control file is now `raygrid.js` since there might be other controls later.
 * Dependency is now on Bootstrap 5.

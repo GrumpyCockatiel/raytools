@@ -28,12 +28,7 @@
         <form class="mb-2">
             <div class="row">
                 <div class="col-2">
-                    <select name="sizeMenu" id="sizeMenu" class="form-control form-select col-2">
-                        <option value="50">50 Records</option>
-                        <option value="100">100 Records</option>
-                        <option value="500">500 Records</option>
-                        <option value="0">Empty</option>
-                    </select>
+                    <select name="sizeMenu" id="sizeMenu" class="form-control form-select col-2"></select>
                 </div>
                 <button id="reloadButton" type="button" class="btn btn-primary col-3">Reload Some Random Data</button>
             </div>
@@ -51,17 +46,20 @@
         crossorigin="anonymous"></script>
     <script type="module">
 
-        import RayGrid from "../dist/raygrid.js";
+        import * as ray from "../main.js";
+
+        const sizeData = [{ value: 10, display: '10 records' }, {value:50, display:'50 records'}, { value: 100, display: '100 records' }, { value: 500, display: '500 records' }, { value: 0, display: 'Empty' }];
 
         const url = "https://my.api.mockaroo.com/employees?key=8578a260";
 
-        var dataTable = null;
+        let dataTable = null;
+        let sizeMenu = null;
 
         /* onLoad */
         document.addEventListener("DOMContentLoaded", function (event) {
 
             // define the data table using a parent block element like div
-            dataTable = new RayGrid(document.getElementById("dataTable"), {
+            dataTable = new ray.RayGrid(document.getElementById("dataTable"), {
                 keyfield: 'id',
                 styleClasses: ['table-bordered', 'table-hover'],
                 columns: [
@@ -78,10 +76,14 @@
                 rowNumbers: { visible: true, title: 'Row', styleClasses: ['rowNumStyle'] },
                 pageSize: 11,
                 maxPageButtons: 5,
+                footer: {autoHide: true },
                 rowClickHandler: rowAction
             });
 
             document.getElementById("reloadButton").addEventListener('click', () => { getData(); });
+
+            sizeMenu = new ray.RayDropdown( document.getElementById("sizeMenu"), {keyField:'value', displayField: 'display' } );
+            sizeMenu.data = sizeData;
 
             getData();
         });
@@ -102,7 +104,7 @@
 
         /* callback when data is loaded */
         function loadData(json) {
-            const len = document.getElementById("sizeMenu").value;
+            const len = parseInt( sizeMenu.selectedValue );
             dataTable.data = json.slice(0, len);
             dataTable.render();
         }

@@ -1,5 +1,5 @@
 /* a Grid Table control */
-export default class RayGrid {
+export class RayGrid {
 
     static space = "&nbsp;";
    
@@ -18,6 +18,7 @@ export default class RayGrid {
     #maxPageButtons = 2; // the maximum number of pager buttons to display
     #currentSort = { field: null, direction: 1}; // current sort field and direction where asc = 1 and desc = -1
     #currentSelection = null; // last clicked row - the data record itself
+    #footerOptions = { autoHide: true }; // options on the footer
 
     /* constructor */
     constructor(parentElem, options) {
@@ -29,13 +30,14 @@ export default class RayGrid {
         this.#tableStyleClasses = (options.styleClasses) ? options.styleClasses : [];
         this.#columns = options.columns;
         this.#rowNumbers = (options.rowNumbers) ? options.rowNumbers : { visible: false, title: 'Row' };
+        this.#footerOptions = (options.footer) ? options.footer : { autoHide: true };
         this.#keyfield = (options.keyfield) ? options.keyfield : null;
         this.#onRowClick = options.rowClickHandler;
         this.#noDataLabel = (options.noDataLabel ) ? options.noDataLabel : 'no data';
         this.#pageSize = ( options.pageSize > 0 ) ? options.pageSize : 25 ;
         this.#maxPageButtons = (options.maxPageButtons) ? options.maxPageButtons : 2;
 
-        if (options.sortIcons)
+        if ( options.sortIcons )
         {
             this.#sortAscIcon = options.sortIcons.asc;
             this.#sortDescIcon = options.sortIcons.desc;
@@ -49,11 +51,25 @@ export default class RayGrid {
 
     /* sets the data */
     set data(data) {
-        if ( !Array.isArray(data) )
-            this.#debug('Bound data is not an array of records.');
-
-        this.#data = data;
         
+
+        if ( !Array.isArray(data) )
+        {
+            this.#debug('Bound data is not an array of records.');
+            this.#data = [];
+            this.#currentPageIdx = 0;
+            return;
+        }
+
+        if (data.length < 1) {
+            this.#data = [];
+            this.#currentPageIdx = 0;
+            return;
+        }
+
+        // set the data
+        this.#data = data;
+
         // check the current page index is not too large for the new data
         if ( this.#currentPageIdx > this.maxPages - 1 )
             this.#currentPageIdx = this.maxPages - 1;
@@ -78,7 +94,7 @@ export default class RayGrid {
 
     /* get the maximum possible pages based on the current data and page size */
     get maxPages() {
-        return Math.ceil(this.data.length / this.#pageSize);
+        return this.#data.length > 0 ? Math.ceil(this.#data.length / this.#pageSize) : 1;
     }
 
     /* check a string for an empty or all whitespace value */
@@ -137,7 +153,7 @@ export default class RayGrid {
         table.appendChild(header);
 
         // bail if there is no data
-        if (this.#data.length < 1) {
+        if ( this.#data.length < 1 ) {
             this.#parentElem.replaceChildren();
             this.#parentElem.appendChild(table);
             this.#parentElem.appendChild(this.#renderNoData());
@@ -242,24 +258,29 @@ export default class RayGrid {
         // render the pager buttons
         let pages = this.#createPageButtons();
 
-        pages.forEach( (v) => {
-            let currentPage = this.#createPageLink(`${v + 1}`, v, v == this.#currentPageIdx);
-            pagerCtrl.appendChild(currentPage);
-        } );
+        if ( pages.length > 2 || (pages.length < 2 && !this.#footerOptions.autoHide))
+        {
+            pages.forEach((v) => {
+                let currentPage = this.#createPageLink(`${v + 1}`, v, v == this.#currentPageIdx);
+                pagerCtrl.appendChild(currentPage);
+            });
 
-        // last page
-        let lastPage = this.#createPageLink('&raquo;', Math.ceil(this.data.length / this.#pageSize) - 1, false );
-        pagerCtrl.appendChild(lastPage);
+            // last page
+            let lastPage = this.#createPageLink('&raquo;', Math.ceil(this.data.length / this.#pageSize) - 1, false);
+            pagerCtrl.appendChild(lastPage);
 
-        pagerNav.appendChild(pagerCtrl);
+            pagerNav.appendChild(pagerCtrl);
 
-        // summary
+            footer.appendChild(pagerNav);
+        }
+
+        // summary part
         let start = this.#currentPageIdx * this.#pageSize;
         let end = Math.min( start + this.#pageSize, this.#data.length );
 
         let summary = document.createElement("div");
         summary.innerText = `${start + 1} - ${end} of ${this.#data.length} items`;
-        footer.appendChild(pagerNav);
+        
         footer.appendChild(summary);
 
         return footer;
