@@ -31,7 +31,7 @@ export class RayDropdown
 
     /* sets the data */
     set data(data) {
-        if (!Array.isArray(data))
+        if ( !Array.isArray(data) )
             debug('Bound data is not an array of records.');
 
         this.#data = data;
@@ -44,6 +44,18 @@ export class RayDropdown
     /* get the currently selected value */
     get selectedValue() {
         return this.#parentElem.value;
+    }
+
+    /* sets the menu to the currently selected value if it can otherwise to 0 */
+    set selectedValue(val) {
+
+        if ( this.#data.length < 1 )
+        {
+            this.#parentElem.selectedIndex = 0;
+            return;
+        }
+
+        return this.#parentElem.value = val;
     }
 
     /* get the currently selected data item */
@@ -77,6 +89,7 @@ export class RayDropdown
 
         this.#selectedIdx = event.srcElement.selectedIndex;
 
+        // broadcast the change
         if (this.#onChange)
             this.#onChange(event, this.#data[this.#selectedIdx] );
     }

@@ -48,7 +48,7 @@
 
         import * as ray from "../main.js";
 
-        const sizeData = [{ value: 10, display: '10 records' }, {value:50, display:'50 records'}, { value: 100, display: '100 records' }, { value: 500, display: '500 records' }, { value: 0, display: 'Empty' }];
+        const sizeData = [{ value: 10, display: '10 records' }, {value:50, display:'50 records'}, { value: 100, display: '100 records' }, { value: 333, display: '333 records' }, { value: 500, display: '500 records' }, { value: 0, display: 'Empty' }];
 
         const url = "https://my.api.mockaroo.com/employees?key=8578a260";
 
@@ -84,6 +84,7 @@
 
             sizeMenu = new ray.RayDropdown( document.getElementById("sizeMenu"), {keyField:'value', displayField: 'display' } );
             sizeMenu.data = sizeData;
+            sizeMenu.selectedValue = 100;
 
             getData();
         });

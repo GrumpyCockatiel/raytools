@@ -1,4 +1,4 @@
-# raytools 1.1.0
+# raytools 1.1.1
 
 Raytools is my personal collection of Javascript controls that depend on Bootstrap 5 (that may change later to no dependencies or multiple CSS libs).
 
@@ -28,13 +28,13 @@ See `demo/index.html` to see how to configure.
 
 ```javascript
 
-import { RayGrid } from '@raydreams/jscontrols'
+import * as ray from '@raydreams/jscontrols'
 
 var dataTable = null;
 
 document.addEventListener("DOMContentLoaded", function (event) {
 
-    dataTable = new RayGrid(document.getElementById("dataTable"), {
+    dataTable = new ray.RayGrid(document.getElementById("dataTable"), {
         keyfield: 'id',
         styleClasses: ['table-bordered', 'table-hover'],
         columns: [
