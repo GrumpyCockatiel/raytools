@@ -9,6 +9,7 @@ export class RayDropdown
     #parentElem = null;
     #selectedIdx = -1; // the currently selected index
     #onChange = null; // event hanlder when the menu changes
+    #unsetSelection = { value: -1, display: 'Select...' }; // when not null inserts this value as the first in the drop down
 
     /* constructor */
     constructor(parentElem, options) {
@@ -20,6 +21,7 @@ export class RayDropdown
         this.#keyfield = options.keyField;
         this.#displayfield = options.displayField;
         this.#onChange = options.changeHandler;
+        this.#unsetSelection = options.unsetSelection;
 
         this.#parentElem.addEventListener('change', evt => this.#doChangeSelection(evt) );
     }
@@ -39,6 +41,14 @@ export class RayDropdown
         // need rules to reset index
 
         this.#render();
+    }
+
+    /* sets the change handler to a new one - only one at a time for now */
+    set changeHandler(handler) {
+        if (!handler)
+            reuturn;
+
+        this.#onChange = handler;
     }
 
     /* get the currently selected value */
@@ -63,7 +73,7 @@ export class RayDropdown
         return this.#data.find(d => this.#parentElem.value === d[this.#keyfield]);
     }
 
-    /* */
+    /* renders the control */
     #render() {
         if ( this.#data.length < 1 )
             return;
@@ -75,6 +85,14 @@ export class RayDropdown
         const isStrings = useIdx && useFirst;
 
         this.#parentElem.replaceChildren();
+
+        if ( this.#unsetSelection )
+        {
+            let option = document.createElement("option");
+            option.value = this.#unsetSelection.value;
+            option.innerText = this.#unsetSelection.display;
+            this.#parentElem.appendChild(option);
+        }
 
         this.#data.forEach( (elem, idx) => {
             let option = document.createElement("option");

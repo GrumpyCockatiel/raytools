@@ -82,9 +82,10 @@
 
             document.getElementById("reloadButton").addEventListener('click', () => { getData(); });
 
-            sizeMenu = new ray.RayDropdown( document.getElementById("sizeMenu"), {keyField:'value', displayField: 'display' } );
+            sizeMenu = new ray.RayDropdown( document.getElementById("sizeMenu"), { unsetSelection: null, keyField:'value', displayField: 'display' } );
             sizeMenu.data = sizeData;
             sizeMenu.selectedValue = 100;
+            sizeMenu.changeHandler = sizeChanged;
 
             getData();
         });
@@ -133,6 +134,12 @@
         /* icon handler */
         function deleteRecord(event, item) {
             alert(`Delete item ${item.id}`);
+            event.stopPropagation();
+        }
+
+        /* size menu handler */
+        function sizeChanged(event, item) {
+            alert(`Displaying ${item.display}`);
             event.stopPropagation();
         }
 

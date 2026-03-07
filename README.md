@@ -1,4 +1,4 @@
-# raytools 1.1.1
+# raytools 1.1.3
 
 Raytools is my personal collection of Javascript controls that depend on Bootstrap 5 (that may change later to no dependencies or multiple CSS libs).
 
